@@ -1,0 +1,37 @@
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    background-color: rgb(23, 61, 102);
+}
+
+.navbar .container-fluid .navbar-collapse {
+    height: 60px;
+}
+
+.navbar .container-fluid .navbar-nav ul {
+    height: 100%;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: #ededed;
+    text-align: center;
+    text-decoration: none;
+}
+
+.navbar-nav li {
+    height: 100%;
+    padding: 0 5px;
+}
+
+.navbar a:hover {
+    background-color: rgb(135, 193, 254);
+    color: #ededed;
+    height: fit-content;
+}

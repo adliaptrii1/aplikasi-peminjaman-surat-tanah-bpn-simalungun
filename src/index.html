@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATR-BPN</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 sidebar">
+                <div class="sidebar-header">
+                    <img src="logo.png" alt="ATR-BPN Logo" class="logo">
+                    <h4 class="sidebar-title">ATR-BPN</h4>
+                </div>
+                <ul class="sidebar-menu">
+                    <li class="active"><a href="#"><i class="fas fa-list-ul"></i> Peminjaman</a></li>
+                    <li><a href="#"><i class="fas fa-list-ul"></i> List Peminjaman</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> Peminjaman</a></li>
+                    <li><a href="#"><i class="fas fa-undo-alt"></i> Pengembalian</a></li>
+                    <li><a href="#"><i class="fas fa-file-invoice"></i> Laporan</a></li>
+                    <li><a href="#"><i class="fas fa-money-bill-wave"></i> Denda</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> Surat Tugas & Berita acara</a></li>
+                    <li><a href="#"><i class="fas fa-database"></i> Data</a></li>
+                </ul>
+            </div>
+            <div class="col-md-9 content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <h2>List Peminjaman</h2>
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-3">
+                                        <span class="badge badge-secondary">Forward: 100</span>
+                                    </div>
+                                    <div class="mr-3">
+                                        <span class="badge badge-secondary">Kirim: 789</span>
+                                    </div>
+                                    <div class="mr-3">
+                                        <span class="badge badge-secondary">Peminjaman: 1105</span>
+                                    </div>
+                                    <div class="mr-3">
+                                        <span class="badge badge-secondary">Pengajuan: 769</span>
+                                    </div>
+                                    <div class="mr-3">
+                                        <span class="badge badge-secondary">Pengembalian: 237</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <button class="btn btn-secondary mr-2">Pengajuan</button>
+                                <button class="btn btn-secondary mr-2">Dikirim</button>
+                                <button class="btn btn-secondary mr-2">Peminjaman</button>
+                                <button class="btn btn-secondary mr-2">Forward</button>
+                                <button class="btn btn-secondary mr-2">Pengembalian</button>
+                                <button class="btn btn-secondary">Selesai</button>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <h2>List Pengajuan</h2>
+                        </div>
+                        <div class="col-12">
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" placeholder="Search...">
+                                </div>
+                                <div class="col-md-4 d-flex align-items-center justify-content-end">
+                                    <button class="btn btn-secondary"><i class="fas fa-print"></i> Print Semua</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No Berkas</th>
+                                        <th>Kecamatan</th>
+                                        <th>Kelurahan</th>
+                                        <th>Pelayanan</th>
+                                        <th>Tipe Hak</th>
+                                        <th>No Hak</th>
+                                        <th>Jenis Arsip</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>SP (AKHMAD MIRHAN SAH. S.H.)</td>
+                                        <td>19-Jul-2022 12:29</td>
+                                        <td>393 Hari</td>
+                                        <td>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="urgent1">
+                                                <label class="custom-control-label" for="urgent1">Urgent</label>
+                                            </div>
+                                        </td>
+                                        <td>No Tiket: 19072238FUCUF</td>
+                                        <td>SU</td>
+                                        <td>
+                                            <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-secondary"><i class="fas fa-print"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>PHP (ANTUNG MAHMUDINOR. S.P.)</td>
+                                        <td>20-Jul-2022 17:04</td>
+                                        <td>392 Hari</td>
+                                        <td>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" id="urgent2">
+                                                <label class="custom-control-label" for="urgent2">Urgent</label>
+                                            </div>
+                                        </td>
+                                        <td>No Tiket: 2007222121SSLK</td>
+                                        <td>SU</td>
+                                        <td>
+                                            <button class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+                                            <button class="btn btn-secondary"><i class="fas fa-print"></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+</html>
