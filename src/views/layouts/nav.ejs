@@ -12,10 +12,22 @@
                   <a class="nav-link" href="/">Home</a>
               </li> -->
               <li class="nav-item">
-                  <a class="nav-link" href="/pengajuan">Pengajuan</a>
+                    <a class="nav-link" href="/pengajuan">
+                        <% if (title === 'Pengajuan') { %>
+                            <strong class="text-light">Pengajuan</strong>
+                        <% } else { %>
+                            Pengajuan
+                        <% } %>
+                    </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="/peminjaman">Peminjaman</a>
+                    <a class="nav-link" href="/peminjaman">
+                        <% if (title === 'Peminjaman') { %>
+                            <strong class="text-light">Peminjaman</strong>
+                        <% } else { %>
+                            Peminjaman
+                        <% } %>
+                    </a>
               </li>
 
               <li class="nav-item">
