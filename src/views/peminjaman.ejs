@@ -1,0 +1,84 @@
+<div class="form-container container-fluid ">
+    <div class="form ms-auto me-auto mt-5 border">
+        <!-- <div class="form-header position-relative">
+            <div class="circles-header d-flex flex-row-reverse">
+                <div class="rounded-circle bg-danger ms-1" style="height: 12px; width: 12px;"></div>
+                <div class="rounded-circle bg-warning ms-1" style="height: 12px; width: 12px;"></div>
+                <div class="rounded-circle bg-success ms-1" style="height: 12px; width: 12px;"></div>
+            </div>
+        </div> -->
+        <div class="form-body ">
+            <h3 class="fw-bolder">
+               List Peminjaman
+            </h3>
+            <table id="myTable" class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Username</th>
+                    <th>Kelurahan</th>
+                    <th>Kecamatan</th>
+                    <th>No. Berkas</th>
+                    <th>Tipe Hak</th>
+                    <th>No Hak</th>
+                    <th>Jenis Berkas</th>
+                    <th>Pelayanan</th>
+                    <th>Keterangan</th>
+                    <th>Waktu Dibuat</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body">
+                  </tbody>
+                
+                <!-- <button type="submit" class="btn">Tambahkan Pengajuan</button> -->
+        </div>
+   
+    </div>
+
+    <script>
+         //Coba isi dengan satu data palsu
+        const buildTable = (data) => {
+            const table = document.getElementById('table-body')
+            table.innerHTML = ''
+            data.forEach((data, index) => {
+                const row = `<tr>
+                    <td>${index + 1}</td>
+                    <td>${data.username}</td>
+                    <td>${data.subdistrict}</td>
+                    <td>${data.ward}</td>
+                    <td>${data.file_number}</td>
+                    <td>${data.rights_type}</td>
+                    <td>${data.rights_number}</td>
+                    <td>${data.file_type}</td>
+                    <td>${data.service}</td>
+                    <td>${data.description}</td>
+                    <td>${data.created_at}</td>
+                    <td>${data.status}</td>
+                </tr>`
+                table.innerHTML += row
+            })
+        }
+
+         const data = [
+             {
+                 id: 1,
+                 username: 'user1',
+                 subdistrict: 'subdistrict1',
+                 ward: 'ward1',
+                 file_number: 'file_number1',
+                 rights_type: 'rights_type1',
+                 rights_number: 'rights_number1',
+                 file_type: 'file_type1',
+                 service: 'service1',
+                 description: 'description1',
+                 created_at: 'created_at1',
+                 status: 'status1'
+             }
+        ]
+
+        buildTable(data)
+
+        
+        
+    </script>

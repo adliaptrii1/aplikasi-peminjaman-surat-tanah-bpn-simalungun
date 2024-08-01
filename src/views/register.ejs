@@ -1,0 +1,40 @@
+<div class="form-container container-fluid ">
+    <div class="form ms-auto me-auto mt-5 border" id="login">
+        <!-- <div class="form-header position-relative">
+            <div class="circles-header d-flex flex-row-reverse">
+                <div class="rounded-circle bg-danger ms-1" style="height: 12px; width: 12px;"></div>
+                <div class="rounded-circle bg-warning ms-1" style="height: 12px; width: 12px;"></div>
+                <div class="rounded-circle bg-success ms-1" style="height: 12px; width: 12px;"></div>
+            </div>
+        </div> -->
+        <div class="form-body ">
+            <h3 class="fw-bolder">
+               Register
+            </h3>
+            <form action="/register" method="POST">
+                <div class="form-item mb-3">
+                    <label for="name" class="form-label">Nama : </label>
+                    <input type="text" name="user" id="user" class="form-control" required>
+                </div>
+                <div class="form-item mb-3">
+                    <label for="name" class="form-label">Email : </label>
+                    <input type="email" name="user" id="user" class="form-control" required>
+                </div>
+                <div class="form-item mb-3">
+                    <label for="number" class="form-label">Nomor Telepon : </label>
+                    <input type="text" name="number" id="number" class="form-control" required>
+                </div>
+                <div class="form-item mb-3">
+                    <label for="password" class="form-label">Kata Sandi : </label>
+                    <input type="password" name="pass" id="pass" class="form-control" required>
+                </div>
+                <div class="form-item mb-3">
+                    <label for="password" class="form-label">Konfirmasi Kata Sandi : </label>
+                    <input type="password" name="pass" id="pass" class="form-control" required>
+                </div>
+                
+                <button type="submit" class="btn">Register</button>
+            </form>      
+        </div>
+   
+    </div>

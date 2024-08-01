@@ -1,9 +1,101 @@
-<div class="container">
-    <div class="row">
-        <div class="col text-center">
-            <img src="img/bpn-logo.png" alt="Logo BPN" class="img-fluid" style="width: 200px;">
-            <h1 class="display-4">ATR-BPN Simalungun</h1>
-            <p class="lead">Kementerian Agraria | Badan Pertanahan Nasional</p>
+<div class="form-container container-fluid ">
+    <div class="form ms-auto me-auto mt-5 border">
+        <!-- <div class="form-header position-relative">
+            <div class="circles-header d-flex flex-row-reverse">
+                <div class="rounded-circle bg-danger ms-1" style="height: 12px; width: 12px;"></div>
+                <div class="rounded-circle bg-warning ms-1" style="height: 12px; width: 12px;"></div>
+                <div class="rounded-circle bg-success ms-1" style="height: 12px; width: 12px;"></div>
+            </div>
+        </div> -->
+        <div class="form-body ">
+            <h3 class="fw-bolder">
+               Tambah Pengajuan
+            </h3>
+            <form action="/api/pengajuan" method="POST">
+                <div class="form-item mb-3 date-container">
+                    <div class="row">
+                        <div class="col">
+                            <label for="subdistrict" class="form-label">Kecamatan :</label>
+                            <select id="subdistrict" name="subdistrict" class="form-control" required>
+                                <option value="">Pilih...</option>
+                                <!-- Isi dari pilihan kecamatan -->
+                            </select>
+                        
+                        </div>
+                        <div class="col">
+                            <label for="ward" class="form-label">Kelurahan/Desa :</label>
+                            <select id="ward" name="ward" class="form-control" required>
+                                <option value="">Pilih...</option>
+                                <!-- Isi dari pilihan kelurahan -->
+                            </select>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item mb-3 date-container">
+                    <div class="row">
+                        <div class="col">
+                            <label for="service" class="form-label">Pelayanan :</label>
+                            <select id="service" name="service" class="form-control" required>
+                                <option value="">Pilih...</option>
+                                <!-- Isi dari pilihan pelayanan -->
+                            </select>
+                        
+                        </div>
+                        <div class="col">
+                            <label for="rights_type" class="form-label">Tipe Hak : </label>
+                            <select id="rights_type" name="rights_type" class="form-control" required>
+                                <option value="">Pilih...</option>
+                                <!-- Isi dari pilihan tipe hak -->
+                            </select>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item mb-3 date-container">
+                    <div class="row">
+                        <div class="col">
+                            <label for="file_number" class="form-label">Nomor Berkas :</label>
+                            <input type="text" name="file_number" id="file_number" class="form-control" required>
+                        </div>
+                        <div class="col">
+                            <label for="rights_number" class="form-label">Nomor Hak : </label>
+                            <input type="text" name="rights_number" id="rights_number" class="form-control" required>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item-mb-5">
+                    <label for="files" class="form-label mb-2">Berkas :</label>
+                    <!-- Checkbox -->
+                    
+                    <div class="row mb-1">
+                        <div class="col-md-3">
+                            <input class="form-check-input" type="checkbox" value="node-js" id="node-js">
+                            <label class="form-check-label" for="node-js">
+                                Buku Tanah
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-check-input" type="checkbox" value="java" id="java">
+                            <label class="form-check-label" for="java">
+                                Surat Tanah
+                            </label>
+                        </div>
+                        <div class="col-md-3">
+                            <input class="form-check-input" type="checkbox" value="react-js" id="react-js">
+                            <label class="form-check-label" for="react-js">
+                                Warkah
+                            </label>
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-text text-danger" id="techHelp"> </div>
+                </div>
+                
+                <button type="submit" class="btn">Tambahkan Pengajuan</button>
+            </form>      
         </div>
+   
     </div>
-</div>

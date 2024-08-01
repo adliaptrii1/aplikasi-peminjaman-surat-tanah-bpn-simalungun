@@ -1,44 +1,97 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary my-0 py-0" data-bs-theme="dark">
-    <div class="container-fluid">
+<nav id="navbar" class="navbar navbar-expand-lg position-fixed z-2" data-bs-theme="dark">
+  <div class="container-fluid">
       <a class="navbar-brand" href="/">
-        <img src="img/bpn-logo.png" alt="Logo" width="30"  class="d-inline-block align-text-top me-2">    
-        ATR/BPN Simalungun
-    </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+          <img src="/img/bpn-logo.png" alt="Bootstrap" width="50px">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav my-0 py-0">
-          <li class="nav-item ">
-            <a class="nav-link active" aria-current="page" href="/pengajuan">Pengajuan</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="about">Pengiriman</a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="contact">Pengembalian</a>
-          </li>
-          <li class="nav-item dropdown ">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Denda
-            </a>
-            <ul class="dropdown-menu ">
-              <li><a class="dropdown-item" href="#">Rusak</a></li>
-              <li><a class="dropdown-item" href="#">Hilang</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown ">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Berita Acara  
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Rusak</a></li>
-              <li><a class="dropdown-item" href="#">Hilang</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-        </ul>
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+              <!-- <li class="nav-item">
+                  <a class="nav-link" href="/">Home</a>
+              </li> -->
+              <li class="nav-item">
+                  <a class="nav-link" href="/pengajuan">Pengajuan</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="/peminjaman">Peminjaman</a>
+              </li>
+
+              <li class="nav-item">
+                  <a class="nav-link" href="/pengembalian">Pengembalian</a>
+              </li>
+              <li class="nav-item dropdown ">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Denda
+                </a>
+                <ul class="dropdown-menu ">
+                  <li><a class="dropdown-item" href="/rusak">Rusak</a></li>
+                  <li><a class="dropdown-item" href="/hilang">Hilang</a></li>
+                  <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                </ul>
+              </li>
+              <li class="nav-item dropdown ">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Berita Acara  
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Surat Tugas</a></li>
+                  <li><a class="dropdown-item" href="#">Hilang</a></li>
+                  <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                </ul>
+              </li>
+              <li class="nav-item dropdown ">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Basis Data
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Kelurahan</a></li>
+                    <li><a class="dropdown-item" href="#">Kecamatan</a></li>
+                    <li><a class="dropdown-item" href="#">Pelayanan</a></li>
+                    <li><a class="dropdown-item" href="#">Tipe Hak</a></li>
+                    <li><a class="dropdown-item" href="#">Pengguna</a></li>
+                  <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                </ul>
+              </li>
+          </ul>
+          
+          <!-- Buat login dan register -->
+          <div class="ms-auto">
+              <ul class="navbar-nav">
+                  
+                  <!--if .User-->
+                      <li class="nav-item dropdown profile-settings">
+                          <span class="profile-picture">
+                              <img src="img/profile.png" class="rounded-circle" alt="profile" width="30px">
+                          </span>
+                          <a class="nav-link dropdown-toggle ps-3 pe-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <span class="profile-name">
+                                  <!--.User-->admin
+                              </span>
+                          </a>
+                          <ul class="dropdown-menu">
+                          <li><form action="/profile" method="get"><button class="dropdown-item" href="/profile/">My Profile</button></form></li>
+                          <li><form action="/logout" method="post"><button class="dropdown-item" href="/logout">Logout</button></form></li>
+                          </ul>
+                      </li>
+                  <!--else-->
+                      <li class="nav-item login">
+                          <a class="nav-link" href="/login">Login</a>
+                      </li>
+                      <li class="nav-item register">
+                          <a class="nav-link" href="/register">Register</a>
+                      </li>
+                  <!--end-->
+              </ul>
+              
+          </div>
+
+           
+
+          
       </div>
-    </div>
+  </div>
   </nav>
+
+  <!-- <nav id="navbar" class="navbar navbar-expand-lg " data-bs-theme="dark"></nav> -->

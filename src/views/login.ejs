@@ -1,0 +1,28 @@
+<div class="form-container container-fluid ">
+    <div class="form ms-auto me-auto mt-5 border" id="login">
+        <!-- <div class="form-header position-relative">
+            <div class="circles-header d-flex flex-row-reverse">
+                <div class="rounded-circle bg-danger ms-1" style="height: 12px; width: 12px;"></div>
+                <div class="rounded-circle bg-warning ms-1" style="height: 12px; width: 12px;"></div>
+                <div class="rounded-circle bg-success ms-1" style="height: 12px; width: 12px;"></div>
+            </div>
+        </div> -->
+        <div class="form-body ">
+            <h3 class="fw-bolder">
+               Login
+            </h3>
+            <form action="/login" method="POST">
+                <div class="form-item mb-3">
+                    <label for="name" class="form-label">Email : </label>
+                    <input type="text" name="user" id="user" class="form-control" required>
+                </div>
+                <div class="form-item mb-3">
+                    <label for="password" class="form-label">Password : </label>
+                    <input type="password" name="pass" id="pass" class="form-control" required>
+                </div>
+                
+                <button type="submit" class="btn">Login</button>
+            </form>      
+        </div>
+   
+    </div>
