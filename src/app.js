@@ -7,6 +7,8 @@ const port = 3000;
 const userRoutes = require('./routes/user-routes');
 const kecamatanRoutes = require('./routes/kecamatan-router');
 const kelurahanRoutes = require('./routes/kelurahan-router');
+const rightsTypeRoutes = require('./routes/rights-type-router');
+const services = require('./routes/services-router'); 
 
 // Tuliskan ke console variabel di env
 const db = require('./config/database');
@@ -32,6 +34,9 @@ db.authenticate()
 app.use("/api", userRoutes);
 app.use("/api", kecamatanRoutes);
 app.use("/api", kelurahanRoutes);
+app.use("/api", rightsTypeRoutes);
+app.use("/api", services);
+
 
 // View Engine
 app.get('/', (req, res) => {

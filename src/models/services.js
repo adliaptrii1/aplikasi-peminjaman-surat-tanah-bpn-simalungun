@@ -4,11 +4,11 @@ const { unsignedDecimalNumber } = require('docx');
 
 const { DataTypes } = Sequelize;
 
-const RightsType = db.define('rights_type', {
-    // CREATE TABLE `rights_type` (
-    //     `id` int(10) UNSIGNED NOT NULL,
-    //     `name` varchar(50) NOT NULL
-    //   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+const Services = db.define('services', {
+    /* CREATE TABLE `services` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `service` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci; */
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -16,7 +16,7 @@ const RightsType = db.define('rights_type', {
         allowNull: false,
         unsignedDecimalNumber: true,
     },
-    name: {
+    service: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -25,4 +25,4 @@ const RightsType = db.define('rights_type', {
     timestamps: false,
 });
 
-module.exports = RightsType;
+module.exports = Services;
