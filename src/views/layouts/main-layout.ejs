@@ -21,23 +21,26 @@
       <link rel="stylesheet" type="text/css" href="css/style.css">
       <link rel="stylesheet" type="text/css" href="css/style-auth.css">
       <link rel="stylesheet" type="text/css" href="css/style-form.css">
-  </head>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    </head>
 
   <body>
-      <%- include('nav') %>
+        <%- include('nav') %>
 
-      <!--if .Message-->
-          <!--if .Status-->
-              <div class="alert alert-success alert-dismissible fade show bg-success text-white border-0" role="alert">
-                  <strong><!--.Message--></strong>
-                  <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-          <!--else-->
-              <div class="alert alert-danger alert-dismissible fade show bg-danger text-white border-0" role="alert">
-                  <strong><!--.Message--></strong>
-                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-          <!--end-->
+        <% if (message) { %>
+            <% if (!isDanger) { %>
+                <div class="alert alert-success alert-dismissible fade show bg-success text-white border-0" role="alert">
+                    <strong><%=message %></strong>
+                    <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <%} else {%>
+                <div class="alert alert-danger alert-dismissible fade show bg-danger text-white border-0" role="alert">
+                    <strong><%=message %></strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <% } %>
+        <% } %>
       <!--end-->
       
       <!-- Disini tempat tergantung url yang dipanggil -->
@@ -45,4 +48,7 @@
 
       <!--end-->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-  </body>
+      <script src="/js/index.js"></script>
+    </body>
+
+</html>

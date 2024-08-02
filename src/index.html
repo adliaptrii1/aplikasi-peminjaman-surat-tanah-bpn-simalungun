@@ -1,72 +1,43 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert with Token</title>
+</head>
+<body>
+    <h1>Alert with Token Example</h1>
+    <button id="showAlert">Show Alert</button>
+    <button id="storeAlert">Store Alert Message</button>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script>
+        // Fungsi untuk menyimpan pesan alert di localStorage
+        function storeAlertMessage() {
+            const alertMessage = "This is an alert message!";
+            localStorage.setItem('alertToken', alertMessage);
+            console.log('Alert message stored in token:', alertMessage);
+        }
 
-<style>
-    th{ 
-        color:#fff;
+        // Fungsi untuk menampilkan pesan alert dari localStorage
+        function showAlertMessage() {
+            const alertMessage = localStorage.getItem('alertToken');
+            if (alertMessage) {
+                alert(alertMessage);
+                // Hapus pesan setelah ditampilkan (opsional)
+                localStorage.removeItem('alertToken');
+            } else {
+                console.log('No alert message found in token.');
             }
-</style>
+        }
 
+        // Event listener untuk menyimpan pesan alert
+        document.getElementById('storeAlert').addEventListener('click', storeAlertMessage);
 
-<table class="table table-striped">
-    <tr  class="bg-info">
-        <th data-column="name" data-order="desc">Name &#9650</th>
-        <th data-column="age" data-order="desc">Age &#9650</th>
-        <th data-column="birthdate" data-order="desc">Birthday &#9650</th>
-    </tr>
+        // Event listener untuk menampilkan pesan alert
+        document.getElementById('showAlert').addEventListener('click', showAlertMessage);
 
-    <tbody id="myTable">
-        
-    </tbody>
-</table>
-
-<script>
-	var myArray = [
-	    {'name':'Michael', 'age':'30', 'birthdate':'11/10/1989'},
-	    {'name':'Mila', 'age':'32', 'birthdate':'10/1/1989'},
-	    {'name':'Paul', 'age':'29', 'birthdate':'10/14/1990'},
-	    {'name':'Dennis', 'age':'25', 'birthdate':'11/29/1993'},
-	    {'name':'Tim', 'age':'27', 'birthdate':'3/12/1991'},
-	    {'name':'Erik', 'age':'24', 'birthdate':'10/31/1995'},
-	]
-
-	$('th').on('click', function(){
-		var column = $(this).data('column')
-		var order = $(this).data('order')
-		var text = $(this).html()
-		text = text.substring(0, text.length - 1)
-
-		if(order == 'desc'){
-			$(this).data('order', "asc")
-			myArray = myArray.sort((a,b) => a[column] > b[column] ? 1 : -1)
-			text += '&#9660'
-
-		}else{
-			$(this).data('order', "desc")
-			myArray = myArray.sort((a,b) => a[column] < b[column] ? 1 : -1)
-			text += '&#9650'
-
-		}
-		$(this).html(text)
-		buildTable(myArray)
-	})
-
-	buildTable(myArray)
-
-	function buildTable(data){
-		var table = document.getElementById('myTable')
-		table.innerHTML = ''
-		for (var i = 0; i < data.length; i++){
-			var row = `<tr>
-							<td>${data[i].name}</td>
-							<td>${data[i].age}</td>
-							<td>${data[i].birthdate}</td>
-					  </tr>`
-			table.innerHTML += row
-
-
-		}
-	}
-
-</script>
+        // Cek dan tampilkan pesan alert saat halaman dimuat (opsional)
+        window.addEventListener('load', showAlertMessage);
+    </script>
+</body>
+</html>

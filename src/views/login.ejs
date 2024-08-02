@@ -11,18 +11,20 @@
             <h3 class="fw-bolder">
                Login
             </h3>
-            <form action="/login" method="POST">
+            <form id="form-login">
                 <div class="form-item mb-3">
-                    <label for="name" class="form-label">Email : </label>
-                    <input type="text" name="user" id="user" class="form-control" required>
+                    <label for="username" class="form-label">Email atau Username: </label>
+                    <input type="text" name="username" id="username" class="form-control" required>
                 </div>
                 <div class="form-item mb-3">
                     <label for="password" class="form-label">Password : </label>
-                    <input type="password" name="pass" id="pass" class="form-control" required>
+                    <input type="password" name="password" id="password" class="form-control" required>
                 </div>
                 
-                <button type="submit" class="btn">Login</button>
+                <!-- Panggil  -->
+                <button class="btn" type="submit">Login</button>
             </form>      
         </div>
    
-    </div>
+</div>
+<script src="/js/login.js"></script>

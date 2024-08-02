@@ -9,7 +9,11 @@ const verifyToken = (req, res, next) => {
         if (err) {
             return res.status(401).json({message: "Login terlebih dahulu!"})
         }
+        req.name = user.name;
+        req.username = user.username;
         req.email = user.email;
+        req.phone_number = user.phone_number;
+        req.isAdmin = user.isAdmin;
         next();
     });
 }

@@ -9,6 +9,7 @@ const kecamatanRoutes = require('./routes/kecamatan-router');
 const kelurahanRoutes = require('./routes/kelurahan-router');
 const rightsTypeRoutes = require('./routes/rights-type-router');
 const services = require('./routes/services-router'); 
+const viewsRouter = require('./routes/views-router');
 
 // Tuliskan ke console variabel di env
 const db = require('./config/database');
@@ -36,53 +37,10 @@ app.use("/api", kecamatanRoutes);
 app.use("/api", kelurahanRoutes);
 app.use("/api", rightsTypeRoutes);
 app.use("/api", services);
-
+app.use("", viewsRouter);
 
 // View Engine
-app.get('/', (req, res) => {
-    res.render('index', {
-        layout : 'layouts/main-layout',
-        title : 'Beranda',
-    });
-});
 
-app.get('/login', (req,res) => {
-    res.render('login', {
-        layout : 'layouts/main-layout',
-        title : 'Login',
-    });
-});
-
-app.get('/register', (req,res) => {
-    res.render('register', {
-        layout : 'layouts/main-layout',
-        title : 'Register',
-    });
-});
-
-app.get('/pengajuan', (req, res) => {
-    res.render('pengajuan', {
-        layout : 'layouts/main-layout',
-        title : 'Pengajuan',
-    });
-});
-
-app.get('/peminjaman', (req, res) => {
-    res.render('peminjaman', {
-        layout : 'layouts/main-layout',
-        title : 'Peminjaman',
-    });
-});
-
-
-app.get('/contact', (req, res) => {
-    res.send('This is contact page');
-});
-
-app.put('/password', (req, res) => {
-    console.log(req.body);
-    res.send('Data has been updated');
-});
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);

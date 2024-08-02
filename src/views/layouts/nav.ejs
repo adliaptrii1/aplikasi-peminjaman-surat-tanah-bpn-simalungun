@@ -70,31 +70,8 @@
           
           <!-- Buat login dan register -->
           <div class="ms-auto">
-              <ul class="navbar-nav">
-                  
-                  <!--if .User-->
-                      <li class="nav-item dropdown profile-settings">
-                          <span class="profile-picture">
-                              <img src="img/profile.png" class="rounded-circle" alt="profile" width="30px">
-                          </span>
-                          <a class="nav-link dropdown-toggle ps-3 pe-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                              <span class="profile-name">
-                                  <!--.User-->admin
-                              </span>
-                          </a>
-                          <ul class="dropdown-menu">
-                          <li><form action="/profile" method="get"><button class="dropdown-item" href="/profile/">My Profile</button></form></li>
-                          <li><form action="/logout" method="post"><button class="dropdown-item" href="/logout">Logout</button></form></li>
-                          </ul>
-                      </li>
-                  <!--else-->
-                      <li class="nav-item login">
-                          <a class="nav-link" href="/login">Login</a>
-                      </li>
-                      <li class="nav-item register">
-                          <a class="nav-link" href="/register">Register</a>
-                      </li>
-                  <!--end-->
+              <ul class="navbar-nav" id="navbar-right">
+                    
               </ul>
               
           </div>

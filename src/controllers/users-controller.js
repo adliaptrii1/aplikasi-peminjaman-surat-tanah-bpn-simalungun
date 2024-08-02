@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const validator = require('validator');
 
 const getUsers = async (req, res) => {
+  console.log(`req.email : ${req.email}`);
   try {
     const users = await Users.findAll({
       attributes : ['id', 'name', 'username', 'email', 'phone_number', 'isAdmin'],
@@ -93,6 +94,14 @@ const Login = async (req, res) => {
       secure: true,
     });
 
+    // Cookie alertMessage dalam JSON
+    res.cookie('alertMessage', JSON.stringify({
+      message: "Login berhasil!",
+      isDanger: false,
+    }), {
+      maxAge: 7000,
+    });
+
     
     console.log(accessToken);
     console.log(refreshToken);
@@ -107,10 +116,30 @@ const Login = async (req, res) => {
 
 const Logout = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
-  if (refreshToken == null) return res.sendStatus(204);
+  if (refreshToken == null) { 
+    res.status(401).json({message: "Anda tidak login!"});
+    
+    res.cookie('alertMessage', JSON.stringify({
+      message: "Anda tidak login!",
+      isDanger: true
+    }), {
+      maxAge: 7000,
+    });
+    return;
+  }
 
   const user = await Users.findOne({ where: { refresh_token: refreshToken } });
-  if (user == null) return res.status(403).json({message: "Refresh token tidak valid!"});
+  if (user == null)  {
+    res.status(403).json({message: "Refresh token tidak valid!"});
+    
+    res.cookie('alertMessage', JSON.stringify({
+      message: "Refresh token tidak valid!",
+      isDanger: true
+    }), {
+      maxAge: 7000,
+    });
+    return;
+  }
 
   await Users.update({
     refresh_token: null,
@@ -121,7 +150,18 @@ const Logout = async (req, res) => {
   });
 
   res.clearCookie('refreshToken');
-  return res.status(204).json({message: "Logout success!"});
+
+  res.cookie('alertMessage', JSON.stringify({
+    message: "Logout berhasil!",
+    isDanger: false
+  }), {
+    maxAge: 7000,
+  });
+
+  res.clearCookie('refreshToken');
+
+  res.json({message: "Logout berhasil!"});
+  res.status(200);
 }
 
 module.exports = {
