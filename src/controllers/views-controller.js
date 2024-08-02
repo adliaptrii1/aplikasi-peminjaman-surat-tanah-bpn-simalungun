@@ -39,55 +39,33 @@ const renderViewLogin = async (req, res) => {
     });
 }
 
-const LoginRequest = async (req, res) => {
-    
-    try {
-        const url = `${process.env.URL}/api/login`;
+const renderViewTambahPengajuan = async (req, res) => {
+    const { message, isDanger } = getAlertMessage(req);
 
-        // Cari input username dan password dari form login
-        
+    res.render('pengajuan', {
+        layout : 'layouts/main-layout',
+        title : 'Tambah Pengajuan',
+        message,
+        isDanger,
+    });
+}
 
-        const response = await axios.post(url, {
-            // Cari id username dan password dari form login
-            username: req.userrname,
-            password: req.password
-        });
+const renderViewPeminjaman = async (req, res) => {
+    const { message, isDanger } = getAlertMessage(req);
 
-        const { accessToken } = response.data;
-        console.log(`accessToken = ${accessToken}`);
-
-        token = accessToken;
-        const decoded = jwt_decode(accessToken);
-        req.isLogin = true;
-        req.name = decoded.name;
-        req.username = decoded.username;
-        req.email = decoded.email;
-        req.isAdmin = decoded.isAdmin;
-        req.expire = decoded.exp;
-
-        next();
-    } catch (error) {
-        if (error.response.status === 401) {
-            console.log("Login false");
-            isLogin = false;
-            
-            req.message = "Username atau password salah!";
-            req.isDanger = true;
-            
-            message = "Username atau password salah!";
-            isDanger = true;
-            
-            renderViewLogin(req, res, next, message, isDanger);
-        } else {
-            // console.log(404);
-            console.log(error.response.status);
-            res.send(error.response.status);
-        }
-    }
+    res.render('peminjaman', {
+        layout : 'layouts/main-layout',
+        title : 'Peminjaman',
+        message,
+        isDanger,
+    });
 }
 
 
 
 module.exports = {
-    renderViewIndex, renderViewLogin, LoginRequest
+    renderViewIndex, 
+    renderViewLogin, 
+    renderViewTambahPengajuan, 
+    renderViewPeminjaman
 }

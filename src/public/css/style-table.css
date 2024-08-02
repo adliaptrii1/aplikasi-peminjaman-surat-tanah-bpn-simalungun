@@ -1,0 +1,79 @@
+
+.header{
+    height: 100px;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+
+.search{
+    flex-shrink: 0;
+    display: flex;
+    /* align-content: center;
+    align-items: center; */
+
+}
+.search > input{
+    padding: 8px;
+    border: none;
+    outline: rgb(0, 0, 0);
+    margin: 0 0 0 20px;
+    background: white;
+}
+.field{
+    height: auto;
+    margin: auto;
+}
+table{
+    width: 100%;
+    font-size: 15px;
+    margin: 2px auto;
+    table-layout: auto;
+    color: #1f1f1f;
+    background-color: #ffff;
+    border-spacing: 0;
+    text-align: left;
+    overflow:visible;
+}
+table tr th, td{
+    padding: 10px;
+    border: 1px solid #ccc;
+    
+}
+.bottom-field{
+    width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+}
+.pagination{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pagination li{
+  list-style: none;
+  padding: 2px;
+  margin: 10px;
+  flex-shrink: 0;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid rgb(12, 81, 116);
+  color: rgb(12, 81, 116);
+}
+.pagination li.active{
+  background: rgb(12, 81, 116);
+  color: white;
+  border: 1px solid rgb(12, 81, 116);
+
+}
+.pagination li a{
+  text-decoration: none;
+  padding: 3px 8px;
+  color: inherit;
+  display: block;
+  font-size: 13px;
+}
+i.fa-edit{color: lime;}
+i.fa-trash{color: red;}

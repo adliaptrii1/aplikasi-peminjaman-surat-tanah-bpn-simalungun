@@ -8,6 +8,8 @@ router.get('/', viewsController.renderViewIndex);
 
 router.get('/login', viewsController.renderViewLogin);
 
+router.get('/pengajuan-tambah', viewsController.renderViewTambahPengajuan);
+
 
 router.get('/register', (req,res) => {
     res.render('register', {
@@ -16,19 +18,7 @@ router.get('/register', (req,res) => {
     });
 });
 
-router.get('/pengajuan', (req, res) => {
-    res.render('pengajuan', {
-        layout : 'layouts/main-layout',
-        title : 'Pengajuan',
-    });
-});
-
-router.get('/peminjaman', (req, res) => {
-    res.render('peminjaman', {
-        layout : 'layouts/main-layout',
-        title : 'Peminjaman',
-    });
-});
+router.get('/peminjaman', viewsController.renderViewPeminjaman);
 
 module.exports = router;
 
