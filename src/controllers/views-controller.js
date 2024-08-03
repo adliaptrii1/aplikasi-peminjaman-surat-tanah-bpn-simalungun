@@ -14,6 +14,8 @@ const getAlertMessage = (req) => {
         message = alert.message;
         isDanger = alert.isDanger;
     }
+
+
     return { message, isDanger };
 }
 

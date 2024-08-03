@@ -11,7 +11,7 @@
             <h3 class="fw-bolder">
                Tambah Pengajuan
             </h3>
-            <form action="/api/pengajuan" method="POST">
+            <form id="form-pengajuan">
                 <div class="form-item mb-3 date-container">
                     <div class="row">
                         <div class="col">
@@ -71,31 +71,39 @@
                     
                     <div class="row mb-1">
                         <div class="col-md-3">
-                            <input class="form-check-input" type="checkbox" value="node-js" id="node-js">
-                            <label class="form-check-label" for="node-js">
+                            <input class="form-check-input" type="checkbox" value=1 id="bt">
+                            <label class="form-check-label" for="bt">
                                 Buku Tanah
                             </label>
                         </div>
                         <div class="col-md-3">
-                            <input class="form-check-input" type="checkbox" value="java" id="java">
-                            <label class="form-check-label" for="java">
+                            <input class="form-check-input" type="checkbox" value=1 id="st">
+                            <label class="form-check-label" for="st">
                                 Surat Tanah
                             </label>
                         </div>
                         <div class="col-md-3">
-                            <input class="form-check-input" type="checkbox" value="react-js" id="react-js">
-                            <label class="form-check-label" for="react-js">
+                            <input class="form-check-input" type="checkbox" value=1 id="warkah">
+                            <label class="form-check-label" for="warkah">
                                 Warkah
                             </label>
                         </div>
+                    </div>
+
+                    <!-- Keterangan -->
+                    <div class="row mb-2">
+                        <div class="col">
+                            <label for="information" class="form-label">Keterangan :</label>
+                            <textarea name="information" id="information" class="form-control" required></textarea>
                     </div>
                     
 
                     <div class="form-text text-danger" id="techHelp"> </div>
                 </div>
                 
-                <button type="submit" class="btn">Tambahkan Pengajuan</button>
+                <button type="submit" class="btn" onclick="addPengajuan()">Tambahkan Pengajuan</button>
             </form>      
         </div>
    
     </div>
+<script src="/js/tambah-pengajuan.js"></script>

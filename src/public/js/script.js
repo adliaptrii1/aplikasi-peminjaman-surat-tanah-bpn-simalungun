@@ -1,3 +1,5 @@
+let nama, username, email, isAdmin;
+
 function LogoutSession() {
     alert("Logout!");
     // API : http://localhost:3000/api/logout
@@ -46,7 +48,7 @@ function TambahPengajuan() {
         document.cookie = "alertMessage=" + JSON.stringify({
             message: error.message,
             isDanger: true
-        }) + ";max-age=7000";
+        }) + ";max-age=5";
 
         window.location.href = '/login';
     
@@ -54,15 +56,13 @@ function TambahPengajuan() {
 }
 
 const refreshToken = async () => {
-    fetch('http://localhost:3000/api/token')
-    // nanti refreshToken akan memanggil api "localhost:3000/api/token dan mendapatkan response dengan format JSON  {accessToken}. Lalu hasil dari decoded access_token dimasukkan ke dalam div id yang sesuai
-    .then(response => {
+    console.log("Refresh Token");
+    try {
+        const response = await fetch('http://localhost:3000/api/token');
         if (!response.ok) {
             throw new Error('Refresh Token Gagal!');
         }
-        return response.json();
-    })
-    .then(data => {
+        const data = await response.json();
         const accessToken = data.accessToken;
         const decodedToken = jwt_decode(accessToken);
 
@@ -83,22 +83,13 @@ const refreshToken = async () => {
                 </span>
             </a>
             <ul class="dropdown-menu">
-            <li><button class="dropdown-item" href="/profile/">My Profile</button></li>
-            <li><button class="dropdown-item" href="/logout" onclick="LogoutSession()">Logout</button></li>
+                <li><button class="dropdown-item" href="/profile/">My Profile</button></li>
+                <li><button class="dropdown-item" href="/logout" onclick="LogoutSession()">Logout</button></li>
             </ul>
         </li>
         `;
-
-            // document.getElementById('navbar-right').innerHTML = `
-            // <li class="nav-item login">
-            //     <a class="nav-link" href="/login">Login</a>
-            // </li>
-            // <li class="nav-item register">
-            //     <a class="nav-link" href="/register">Register</a>
-            // </li>
-            // `;
-
-    }).catch(error => {
+        return accessToken;
+    } catch (error) {
         document.getElementById('navbar-right').innerHTML = `
             <li class="nav-item login">
                 <a class="nav-link" href="/login">Login</a>
@@ -107,7 +98,18 @@ const refreshToken = async () => {
                 <a class="nav-link" href="/register">Register</a>
             </li>
         `;
-    });
+        return null;
+    }
 }
 
-refreshToken();
+function closeAlert() {
+    // Hapus cookies untuk alertMessage
+    document.cookie = "alertMessage=;max-age=0";
+}
+
+// Ambil nilai userId, nama, username, email, isAdmin, accessToken dari return refreshToken
+// Membuat main program
+(async () => {
+    const accessToken = await refreshToken();
+})();
+

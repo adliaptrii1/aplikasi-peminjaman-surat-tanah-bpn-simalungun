@@ -3,14 +3,19 @@ const jwt = require('jsonwebtoken');
 
 const refreshToken = async (req, res) => {
     try {
+        console.log("===================================");
+        console.log("Refresh Token");
+        console.log("===================================");
         const refreshToken = req.cookies.refreshToken;
         if (refreshToken == null) return res.sendStatus(401);
 
         const user = await Users.findOne({ where: { refresh_token: refreshToken } });
         if (user == null) return res.sendStatus(403);
 
+        console.log("Find User");
         jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
             if (err) return res.sendStatus(403);
+            console.log("Create Access Token");
             const userId = user.id;
             const username = user.username;
             const name = user.name;
@@ -24,6 +29,8 @@ const refreshToken = async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+
+    
 }
 
 module.exports = refreshToken;

@@ -3,6 +3,7 @@ const router = express.Router();
 const refreshToken = require('../utils/refresh-token');
 const viewsController = require('../controllers/views-controller');
 const expressLayouts = require('express-ejs-layouts');
+const verifyToken = require('../middleware/verify-token');
 
 router.get('/', viewsController.renderViewIndex);
 
