@@ -36,7 +36,6 @@
 .form-body h3 {
     /* text-align: center; */
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid #D9D9D9;
 }
 
 .form-label {
@@ -54,25 +53,21 @@
     color: #000000;
 }
 
+.btn-warning {
+    color : white;
+}
+
 .form-body .form-control:focus {
     box-shadow: none;
     box-shadow: 0 0 0 0.2rem #5e80b3;
     border: none;
 }
 
-.form-body .btn {
-    background: #FE4E30;
-    color: #D9D9D9;
+.form-body .btn{
     font-size: 15px;
     height: 40px;
-    width: 120px;
 }
 
-.form-body .btn:hover {
-    background: #c03b24;
-    color: #D9D9D9;
-    
-}
 
 
 /* Edit placeholder */

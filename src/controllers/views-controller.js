@@ -44,7 +44,7 @@ const renderViewLogin = async (req, res) => {
 const renderViewTambahPengajuan = async (req, res) => {
     const { message, isDanger } = getAlertMessage(req);
 
-    res.render('pengajuan', {
+    res.render('pengajuan-tambah', {
         layout : 'layouts/main-layout',
         title : 'Tambah Pengajuan',
         message,
@@ -63,11 +63,36 @@ const renderViewPeminjaman = async (req, res) => {
     });
 }
 
+const renderViewPengajuan = async (req,res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('pengajuan', {
+        layout : 'layouts/main-layout',
+        title : 'Pengajuan',
+        message,
+        isDanger,
+    });
+
+}
+
+const renderViewPengembalian = async (req,res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('pengembalian', {
+        layout : 'layouts/main-layout',
+        title : 'Pengembalian',
+        message,
+        isDanger,
+    });
+
+}
 
 
 module.exports = {
     renderViewIndex, 
     renderViewLogin, 
     renderViewTambahPengajuan, 
-    renderViewPeminjaman
+    renderViewPeminjaman,
+    renderViewPengajuan,
+    renderViewPengembalian
 }

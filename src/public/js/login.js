@@ -6,7 +6,7 @@ document.getElementById('form-login').addEventListener('submit', function(event)
     console.log('Login');
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    alert(`username = ${username}, password = ${password}`);
+    // alert(`username = ${username}, password = ${password}`);
     
     fetch(url + 'api/login', {
         method: 'POST',
@@ -23,11 +23,11 @@ document.getElementById('form-login').addEventListener('submit', function(event)
         return response.json();
     }).then((data) => {
         console.log(data);
-        alert('Login Berhasil!');
+        // alert('Login Berhasil!');
         window.location.href = '/'; // Redirect ke halaman utama
     }).catch((error) => {
         console.log(error);
-        alert('Login Gagal!');
+        // alert('Login Gagal!');
     });
     
 });

@@ -84,12 +84,11 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
--- Buatkan view untuk menampilkan data loans yang sudah di join dengan tabel kelurahan, rights_type, service, dan user
-  -- SELECT loans.id, kelurahan.name as kelurahan, kecamatan.name as kecamatan ,rights_type.name as rights_type, services.service as service, users.username as user, loans.file_number, loans.right_number, loans.file, loans.information, loans.history, loans.createdAt, loans.updatedAt, loans.status
-  -- FROM loans
-  -- JOIN kelurahan ON loans.id_kelurahan = kelurahan.id
-  -- JOIN kecamatan ON kelurahan.id_kecamatan = kecamatan.id
-  -- JOIN rights_type ON loans.id_rights_type = rights_type.id
-  -- JOIN services ON loans.id_service = services.id
-  -- JOIN users ON loans.id_user = users.id;
+-- Buatkan query untuk menyetel untuk colum `file` hanya bisa berisi string "Buku Tanah", "Surat Tanah", dan "Warkah".
+ALTER TABLE loans
+ADD CONSTRAINT check_file CHECK (file IN ('Buku Tanah', 'Surat Tanah', 'Warkah'));
+
+-- Buatkan query untuk menyetel untuk column `status` hanya bisa berisi string "Pengajuan", "Diterima", "Ditolak", "Peminjaman", "Pengembalian", "Selesai", "Rusak", dan "Hilang".
+ALTER TABLE loans
+ADD CONSTRAINT check_status CHECK (status IN ('Pengajuan', 'Diterima', 'Ditolak', 'Peminjaman', 'Pengembalian', 'Selesai', 'Rusak', 'Hilang'));
 

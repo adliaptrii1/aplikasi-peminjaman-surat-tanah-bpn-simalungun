@@ -85,111 +85,107 @@ function FillTipeHak() {
     })
 }
 
- function addPengajuan() {
-    const id_kelurahan = ward.value;
-    const file_number = document.getElementById('file_number').value;
-    const right_number = document.getElementById('rights_number').value;
-    const id_rights_type = document.getElementById('rights_type').value;
-    const id_service = document.getElementById('service').value;
-    const information = document.getElementById('information').value
 
-    // console.log(id_kelurahan);
-    // console.log(file_number);
-    // console.log(right_number);
-    // console.log(id_rights_type);
-    // console.log(id_service);
-    // console.log(information);
+const addPengajuan = async(event) =>  {
+    event.preventDefault();
 
-    // Tunggu refreshToken higga selesai
-    
+    try {
+        const id_kelurahan = ward.value;
+        const file_number = document.getElementById('file_number').value;
+        const right_number = document.getElementById('rights_number').value;
+        const id_rights_type = document.getElementById('rights_type').value;
+        const id_service = document.getElementById('service').value;
+        const information = document.getElementById('information').value;
 
-    // Cek input checkbox
-    if (document.getElementById('bt').checked) {
-        sendAPIPengajuan("Buku Tanah");
-    }
-    if (document.getElementById('st').checked) {
-        sendAPIPengajuan("Surat Tanah");
-    }
-    if (document.getElementById('warkah').checked) {
-        sendAPIPengajuan("Warkah");
-    }
+        console.log(1);
+        
+        // Cek input checkbox
+        // await proses forEach
 
-    console.log(`Buku Tanah = ${document.getElementById('bt').checked}`);
-    console.log(`Surat Tanah = ${document.getElementById('st').checked}`);
-    console.log(`Warkah = ${document.getElementById('warkah').checked}`);    
+        // console.log(`Buku Tanah = ${document.getElementById('bt').checked}`);
+        // console.log(`Surat Tanah = ${document.getElementById('st').checked}`);
+        // console.log(`Warkah = ${document.getElementById('warkah').checked}`);   
+        
 
-    // Tambahkan cookies untuk alertMessage
-    document.cookie = "alertMessage=" + JSON.stringify({
-        message: "Pengajuan berhasil ditambahkan",
-        isDanger: false
-    }) + ";max-age=5";
+        // Tambahkan cookies untuk alertMessag
 
-    // alert("Pengajuan berhasil ditambahkan");
-    window.location.href = '/pengajuan-tambah';
+        let fileInput = "";
+        if (document.getElementById('bt').checked) {
+            fileInput = "Buku Tanah";
+        } else
+        if (document.getElementById('st').checked) {
+            fileInput = "Surat Tanah";
+        }
+        if (document.getElementById('warkah').checked) {
+            fileInput = "Warkah";
+        }
 
-     function sendAPIPengajuan(file) {
+        console.log(2);
+        
+        
         const data = {
             id_kelurahan,
             file_number,
             right_number,
             id_rights_type,
-            file,
+            file : fileInput,
             id_service,
             information
         }
-        // console.log();
+        console.log(3);
+        
 
-        refreshToken();
-        console.log("Refresh Token Done");
+        const response2 = await fetch('http://localhost:3000/api/token');
+        if (!response2.ok) {
+            throw new Error('Refresh Token Gagal!');
+        }
+        const data2 = await response2.json();
+        const accessToken = data2.accessToken;
 
-        fetch('http://localhost:3000/api/loans', {
+        console.log(4);
+        
+        // alert("Refresh Token Done");
+        const response = await fetch('http://localhost:3000/api/loans', {
             method: 'POST',
             headers: {
-                // Tambahkan authorization header 
+                // Tambahkan authorization header
                 'Authorization': 'Bearer ' + accessToken,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then(response => {
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            return response.json();
-        }
-        ).then(data => {
-            
-    
-            // Buat cookies untuk alertMessage
+        });
+        console.log(5);
+        
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.body}`);
+        } else {
             document.cookie = "alertMessage=" + JSON.stringify({
                 message: "Pengajuan berhasil ditambahkan",
                 isDanger: false
             }) + ";max-age=5";
-        }).catch(error => {
-            // alert(error.message);
-            // console.log(error);
-            document.cookie = "alertMessage=" + JSON.stringify({
-                message: error.message,
-                isDanger: true
-            }) + ";max-age=5";
 
-            window.location.href = '/pengajuan-tambah';
-        })
+            console.log(6);
 
+            alert("DATA BERHASIL DITAMBAH")
 
-        // JSON
-        // {
-        //     "id_kelurahan": 1,
-        //     "file_number": "123",
-        //     "right_number": "123",
-        //     "id_rights_type": 1,
-        //     "file": "Surat Tanah",
-        //     "id_service": 1,
-        //     "information": "Informasi"
-        // }
+            window.location.href = '/pengajuan';
+
+            
+        }
+    } catch (error) {
+        document.cookie = "alertMessage=" + JSON.stringify({
+            message: error.message,
+            isDanger: true
+        }) + ";max-age=5";
+
+        console.log(error);
+
+        // alert("Pengajuan gagal ditambahkan");
     }
 }
+
+document.getElementById('form-pengajuan').addEventListener('submit', addPengajuan);
 
 
 FillKecamatan();

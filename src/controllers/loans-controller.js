@@ -5,8 +5,16 @@ const RightsType = require('../models/rights-type');
 const Services = require('../models/services');
 const Users = require('../models/user');
 
-const getLoans= async (req, res) => {
+const getLoans = async (req, res) => {
     try {
+        // Cek apakah ada query list lalu convert ke integer
+        let list = req.query.list;
+        if (list !== undefined) {
+            list = parseInt(list);
+        }
+
+        let loans;
+
         // SELECT loans.id, kelurahan.name as kelurahan, kecamatan.name as kecamatan ,rights_type.name as rights_type, services.service as service, users.username as user, loans.file_number, loans.right_number, loans.file, loans.information, loans.history, loans.createdAt, loans.updatedAt, loans.status
         // FROM loans
         // JOIN kelurahan ON loans.id_kelurahan = kelurahan.id
@@ -15,36 +23,143 @@ const getLoans= async (req, res) => {
         // JOIN services ON loans.id_service = services.id
         // JOIN users ON loans.id_user = users.id;
         // Gunakan query diatas untuk mengambil data loans
-
-        const loans = await Loans.findAll({
-            attributes: ['id', 'file_number', 'right_number', 'file', 'information', 'history', 'createdAt', 'updatedAt', 'status', 'id_kelurahan', 'id_rights_type', 'id_service', 'id_user'],
-            include: [
-                {
-                    model: RightsType,
-                    attributes: ['name'],
-                    as: 'rights_type',
-                },
-                {
-                    model: Services,
-                    attributes: ['service'],
-                    as: 'service',
-                },
-                {
-                    model: Users,
-                    attributes: ['username'],
-                    as: 'user',
-                },{
-                    model: Kelurahan,
-                    attributes: ['name'],
-                    as: 'kelurahan',
-                    include: {
-                        model: Kecamatan,
+        if (list === undefined) {
+            loans = await Loans.findAll({
+                attributes: ['id', 'file_number', 'right_number', 'file', 'information', 'history', 'createdAt', 'updatedAt', 'status', 'id_kelurahan', 'id_rights_type', 'id_service', 'id_user'],
+                include: [
+                    {
+                        model: RightsType,
                         attributes: ['name'],
-                        as: 'kecamatan',
-                    }
+                        as: 'rights_type',
+                    },
+                    {
+                        model: Services,
+                        attributes: ['service'],
+                        as: 'service',
+                    },
+                    {
+                        model: Users,
+                        attributes: ['username'],
+                        as: 'user',
+                    },{
+                        model: Kelurahan,
+                        attributes: ['name'],
+                        as: 'kelurahan',
+                        include: {
+                            model: Kecamatan,
+                            attributes: ['name'],
+                            as: 'kecamatan',
+                        }
+                    },
+                ]
+            });
+        } else 
+        if (list === 1) {
+            // Cari loans dengan status = "Pengajuan" atau "Diterima"
+            loans = await Loans.findAll({
+                where: {
+                    status: ['Pengajuan', 'Diterima']
                 },
-            ]
-        });
+                attributes: ['id', 'file_number', 'right_number', 'file', 'information', 'history', 'createdAt', 'updatedAt', 'status', 'id_kelurahan', 'id_rights_type', 'id_service', 'id_user'],
+                include: [
+                    {
+                        model: RightsType,
+                        attributes: ['name'],
+                        as: 'rights_type',
+                    },
+                    {
+                        model: Services,
+                        attributes: ['service'],
+                        as: 'service',
+                    },
+                    {
+                        model: Users,
+                        attributes: ['username'],
+                        as: 'user',
+                    },{
+                        model: Kelurahan,
+                        attributes: ['name'],
+                        as: 'kelurahan',
+                        include: {
+                            model: Kecamatan,
+                            attributes: ['name'],
+                            as: 'kecamatan',
+                        }
+                    },
+                ]
+            });
+        } else 
+        if (list === 2) {
+            // Cari loans dengan status = "Peminjaman" atau "Pengembalian"
+            loans = await Loans.findAll({
+                where: {
+                    status: ['Peminjaman', 'Pengembalian', "Diterima"]
+                },
+                attributes: ['id', 'file_number', 'right_number', 'file', 'information', 'history', 'createdAt', 'updatedAt', 'status', 'id_kelurahan', 'id_rights_type', 'id_service', 'id_user'],
+                include: [
+                    {
+                        model: RightsType,
+                        attributes: ['name'],
+                        as: 'rights_type',
+                    },
+                    {
+                        model: Services,
+                        attributes: ['service'],
+                        as: 'service',
+                    },
+                    {
+                        model: Users,
+                        attributes: ['username'],
+                        as: 'user',
+                    },{
+                        model: Kelurahan,
+                        attributes: ['name'],
+                        as: 'kelurahan',
+                        include: {
+                            model: Kecamatan,
+                            attributes: ['name'],
+                            as: 'kecamatan',
+                        }
+                    },
+                ]
+            });
+        } else
+        if (list === 3) {
+            // Cari loans dengan status = "Pengembalian" atau "Selesai"
+            loans = await Loans.findAll({
+                where: {
+                    status: ['Pengembalian', 'Selesai', 'Rusak', 'Hilang']
+                },
+                attributes: ['id', 'file_number', 'right_number', 'file', 'information', 'history', 'createdAt', 'updatedAt', 'status', 'id_kelurahan', 'id_rights_type', 'id_service', 'id_user'],
+                include: [
+                    {
+                        model: RightsType,
+                        attributes: ['name'],
+                        as: 'rights_type',
+                    },
+                    {
+                        model: Services,
+                        attributes: ['service'],
+                        as: 'service',
+                    },
+                    {
+                        model: Users,
+                        attributes: ['username'],
+                        as: 'user',
+                    },{
+                        model: Kelurahan,
+                        attributes: ['name'],
+                        as: 'kelurahan',
+                        include: {
+                            model: Kecamatan,
+                            attributes: ['name'],
+                            as: 'kecamatan',
+                        }
+                    },
+                ]
+            });
+
+        }
         console.log("=============")
         console.log(`REQ =`);
         console.log(req);
@@ -91,7 +206,6 @@ const getLoans= async (req, res) => {
 }
 
 const createLoans = async (req, res) => {
-
     // Cari terlebih dahulu apakah user dengan id tersebut ada
     const username = req.username;
     console.log(`username : ${username}`);
@@ -122,6 +236,12 @@ const createLoans = async (req, res) => {
     }
 
     try {
+        // Dapatkan waktu terlebih dahulu
+        const date = new Date();
+        date.setHours(date.getHours() + 7);
+
+
+
         await Loans.create({
             id_kelurahan,
             id_rights_type,
@@ -131,29 +251,136 @@ const createLoans = async (req, res) => {
             right_number,
             file,
             information,
-            
-            // History dalam bentuk json
-            // Contoh : 
-            // [
-            //     {
-            //         "status" : "Pengajuan",
-            //         "date" : "2021-08-01 12:00:00"
-            //     }
-            // ]
+
             history: JSON.stringify([
                 {
                     status: 'Pengajuan',
-                    date: new Date().toISOString().replace('T', ' ').replace('Z', ''),
+                    date: date.toString()
                 }
             ]),
+
+            createdAt: date,
+            updatedAt: date,
+            
+            
             status: 'Pengajuan',
         });
         res.status(201).json({message: "Pengajuan berhasil dibuat!"});
     } catch (error) {
+        console.log(`Error : ${error}`);
         res.status(500).json({message: error.message});
     }
 }
 
+const upgradeLoans = async (req, res) => {
+    const id = req.params.id;
+    const {status} = req.body;
+    if (!status) {
+        res.status(400).json({message: "Status harus diisi!"});
+        return;
+    }
+
+    // ('Pengajuan', 'Diterima', 'Ditolak', 'Peminjaman', 'Pengembalian', 'Selesai', 'Rusak', 'Hilang'));
+    if (status !== 'Pengajuan' && status !== 'Diterima' && status !== 'Ditolak' && status !== 'Peminjaman' && status !== 'Pengembalian' && status !== 'Selesai' && status !== 'Rusak' && status !== 'Hilang') {
+        res.status(400).json({message: "Status tidak valid!"});
+        return;
+    }
+
+    if (!req.isAdmin && (status === 'Diterima' || status === 'Ditolak' || status === 'Selesai' || status === 'Rusak' || status === 'Hilang')) {
+        res.status(403).json({message: "Hanya admin yang bisa mengubah status menjadi Diterima, Ditolak, Selesai, Rusak, dan Hilang!"});
+        return;
+    }
+
+
+    try {
+        const loans = await Loans.findOne({
+            where: {
+                id
+            }
+        });
+
+        if (!loans) {
+            res.status(404).json({message: `Pengajuan dengan id ${id} tidak ditemukan!`});
+            return;
+        }
+
+        if (status === 'Peminjaman' || status === 'Pengembalian') {
+            // Cek apakah user yang mengajukan adalah user yang sedang login
+            const user = await Users.findOne({
+                where: {
+                    username: req.username
+                }
+            });
+
+            if ((user.id !== loans.id_user) && !req.isAdmin) {
+                res.status(403).json({message: "Hanya user yang mengajukan yang bisa melakukan peminjaman!"});
+                return;
+            }
+        }
+
+        if (status === 'Diterima' && loans.status !== 'Pengajuan') {
+            res.status(403).json({message: "Pengajuan harus dalam status pengajuan untuk bisa diterima!"});
+            return;
+        }
+
+        if (status === 'Ditolak' && loans.status !== 'Pengajuan') {
+            res.status(403).json({message: "Pengajuan harus dalam status pengajuan untuk bisa ditolak!"});
+            return;
+        }
+
+        if (status === 'Peminjaman' && loans.status !== 'Diterima') {
+            res.status(403).json({message: "Pengajuan harus dalam status diterima untuk bisa dipinjamkan!"});
+            return;
+        }
+
+        if (status === 'Pengembalian' && loans.status !== 'Peminjaman') {
+            res.status(403).json({message: "Pengembalian hanya bisa dilakukan ketika status peminjaman!"});
+            return;
+        }
+
+        if ((status === 'Hilang' || status === 'Rusak') && loans.status !== 'Pengembalian') {
+            res.status(403).json({message: "Pengajuan harus dalam status pengembalian untuk bisa diselesaikan!"});
+            return;
+        }
+
+        if (status == 'Selesai' && (loans.status !== 'Rusak' && loans.status !== 'Pengembalian' && loans.status !== 'Hilang')) {
+            res.status(403).json({message: "Pengajuan harus dalam status rusak, pengembalian, atau hilang untuk bisa diselesaikan!"});
+            return;
+        }
+
+        if (loans.status === 'Selesai' || loans.status === 'Ditolak') {
+            res.status(403).json({message: "Pengajuan sudah selesai atau ditolak"});
+            return;
+        }
+
+        // if (loans.)
+
+        const date = new Date();
+        date.setHours(date.getHours() + 7);
+
+        let history = JSON.parse(loans.history);
+        history.push({
+            status,
+            date: date.toString()
+        });
+
+        await Loans.update({
+            status,
+            history: JSON.stringify(history),
+            updatedAt: date
+        }, {
+            where: {
+                id
+            }
+        });
+
+        res.status(200).json({message: "Pengajuan berhasil diupdate!"});
+    } catch (error) {
+        res.status(500).json({message: "Internal Server Error!"});
+    }
+}
+    
+
 module.exports = { 
-    getLoans, createLoans
+    getLoans, createLoans, upgradeLoans
 };

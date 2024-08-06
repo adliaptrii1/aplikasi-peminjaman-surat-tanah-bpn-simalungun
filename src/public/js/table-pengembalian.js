@@ -10,13 +10,14 @@ async function writeTable() {
     try {
         
 
-        const response = await fetch('http://localhost:3000/api/loans?list=2', {
+        const response = await fetch('http://localhost:3000/api/loans?list=3', {
             method: 'GET',
             headers: {
                 // Tambahkan authorization header
                 'Authorization': 'Bearer ' + accessToken,
                 'Content-Type': 'application/json'
             },
+            
         });
 
         if (!response.ok) {
@@ -34,20 +35,13 @@ async function writeTable() {
                 
             </li>`;
 
-            if (data[i].status === 'Diterima') {
+            if (isAdmin && data[i].status === 'Pengembalian') {
                 buttons += `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="acceptFile(${data[i].id})">
-                        <i class="fas fa-check me-1"></i>Terima
-                    </button>
-                </li>`;
-            } else
-            if (data[i].status === 'Peminjaman') {
-                buttons += `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="returnFile(${data[i].id})">
-                        <i class="fas fa-check me-1"></i>Kembalikan
-                    </button>
-                </li>`;
-            }   
+                        <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="collectFileBack(${data[i].id})">
+                            <i class="fas fa-check me-1"></i>Konfirmasi
+                        </button>
+                    </li>`;
+            }
 
             // const tr = document.createElement("tr");
             // Tulis di dalam elemen tabel dengan id = "tbody-main"
@@ -191,16 +185,100 @@ function showHistory(i) {
     applyBlur();
 }
 
-async function acceptFile(id) {
+async function collectFileBack(id) {
     console.log("Accept Request-", id);
-    // Berikan alert namun ada dua pilihan
-    const confirm = window.confirm('Apakah Anda yakin sudah menerima berkas?');
+    // Berikan alert namun ada 4 pilihan, yaitu, "Ya", "Rusak", "Hilang", "Tidak"
+    const overlay = document.getElementById('overlay-info');
 
-    if (!confirm) return;
+    overlay.innerHTML = `
+    <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+        <h3 class="alert-heading">Konfirmasi Pengembalian</h3>
+        <hr class="text-dark">
+        <p class="text-dark fs-6">Apakah Anda yakin ingin mengkonfirmasi pengembalian ini?</p>
+        <button type="button" class="btn btn-success" onclick="confirmCollectFileBack(${id}, 0)">Ya</button>
+        <button type="button" class="btn btn-success" onclick="confirmCollectFileBack(${id}, 1)">Rusak</button>
+        <button type="button" class="btn btn-success" onclick="confirmCollectFileBack(${id}, 2)">Hilang</button>
+        <button type="button position-fixed z-5" class="btn-close " data-bs-dismiss="alert" aria-label="Close" onclick="removeBlur()"></button>
+    </div>
+    `;
 
+    overlay.style.display = 'fixed';
+
+    // Tambahkan kelas blur ke semua elemen
+    applyBlur();
+
+
+    // if (!confirm) return;
+
+    // const accessToken = await refreshToken();
+
+    // try {
+    //     const response = await fetch(`http://localhost:3000/api/loans/${id}`, {
+    //         method: 'PUT',
+    //         headers: {
+    //             'Authorization': 'Bearer ' + accessToken,
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             status: 'Diterima'
+    //         })
+    //     });
+
+    //     if (!response.ok) {
+    //         throw new Error(response.statusText);
+    //     }
+
+    //     // Berikan alert bahwa pengajuan berhasil diterima
+    //     alert('Pengajuan berhasil diterima');
+
+    //     // Refresh halaman
+    //     document.cookie = "alertMessage=" + JSON.stringify({
+    //         message: "Pengajuan berhasil diterima",
+    //         isDanger: false
+    //     }) + ";max-age=5";
+
+    //     window.location.reload();
+
+
+    // } catch (error) {
+    //     console.log(error);
+
+    //     document.cookie = "alertMessage=" + JSON.stringify({
+    //         message: error.message,
+    //         isDanger: true
+    //     }) + ";max-age=5";
+
+    //     window.location.reload();   
+    // }
+}
+
+async function confirmCollectFileBack(id, statusId) {
     const accessToken = await refreshToken();
 
     try {
+        let statusKonfirm = '';
+        console.log("Confirm Collect File Back-", id, statusId);
+        
+
+        if (statusId === 0) {
+            statusKonfirm  = 'Selesai';
+        } else if (statusId === 1) {
+            statusKonfirm  = 'Rusak';
+        } else if (statusId === 2) {
+            statusKonfirm  = 'Hilang';
+        } else {
+            throw new Error('Status tidak valid');
+        }
+
+        const responseToken = await fetch('http://localhost:3000/api/token');
+        alert("Tahan");
+        if (!responseToken.ok) {
+            throw new Error('Refresh Token Gagal!');
+        }
+
+        const dataToken = await responseToken.json();
+        const accessToken = dataToken.accessToken;
+
         const response = await fetch(`http://localhost:3000/api/loans/${id}`, {
             method: 'PUT',
             headers: {
@@ -208,18 +286,17 @@ async function acceptFile(id) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                status: 'Peminjaman'
+                status : statusKonfirm
             })
         });
 
         if (!response.ok) {
-            throw new Error(response.statusText);
+            throw new Error(response.body);
         }
-
 
         // Refresh halaman
         document.cookie = "alertMessage=" + JSON.stringify({
-            message: "Berkas berhasil diterima",
+            message: "Berkas berhasil dikembalikan dalam keadaan " + statusKonfirm,
             isDanger: false
         }) + ";max-age=5";
 
@@ -227,65 +304,17 @@ async function acceptFile(id) {
 
 
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
 
         document.cookie = "alertMessage=" + JSON.stringify({
             message: error.message,
             isDanger: true
-        }) + ";max-age=5";
-
-        window.location.reload();   
-    }
-}
-
-async function returnFile(id) {
-    console.log("Accept Request-", id);
-    // Berikan alert namun ada dua pilihan
-    const confirm = window.confirm('Apakah Anda yakin ingin mengembalikan berkas?');
-
-    if (!confirm) return;
-
-    const accessToken = await refreshToken();
-
-    try {
-        const response = await fetch(`http://localhost:3000/api/loans/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': 'Bearer ' + accessToken,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                status: 'Pengembalian'
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(response.statusText);
-        }
-
-
-        // Refresh halaman
-        document.cookie = "alertMessage=" + JSON.stringify({
-            message: "Berkas berhasil dikembalikan",
-            isDanger: false
         }) + ";max-age=5";
 
         window.location.reload();
-
-
-    } catch (error) {
-        console.log(error);
-
-        document.cookie = "alertMessage=" + JSON.stringify({
-            message: error.message,
-            isDanger: true
-        }) + ";max-age=5";
-
-        window.location.reload();   
+        
     }
 }
-            
-
 
 function giveTrPerPage(){
     console.log("giveTrPerPage");
@@ -359,9 +388,7 @@ function pageRunner(page, items, lastPage, active){
             pageMaker(index, items, active);
         }
     }
-
 }
-
 
 function getpagElement(val){
     let pagelink = pageUl.querySelectorAll("a");
@@ -369,7 +396,6 @@ function getpagElement(val){
     let pageli = pageUl.querySelectorAll('.list');
     // pageli[0].classList.add("active");
     pageRunner(pagelink, val, lastpage, pageli);
-
 }
 
 
@@ -384,7 +410,6 @@ function pageMaker(index, item_per_page, activePage){
     }
     Array.from(activePage).forEach((e)=>{e.classList.remove("active");});
     activePage[index-1].classList.add("active");
-
 }
 
 // search content 
@@ -491,7 +516,6 @@ function sortTable() {
                 </button>
                 
             </li>`;
-
         if (isAdmin) {
             buttons += 
                 `<li>

@@ -1,7 +1,45 @@
 let nama, username, email, isAdmin;
 
+// const showModal = async (param) => {
+//     // Get the modal
+//     var modal = document.getElementById("modal");
+
+//     // Get the <span> element that closes the modal
+//     var span = document.getElementsByClassName("close-button")[0];
+
+//     if (param === 1) {
+//         document.querySelectorAll('.btn-primary').forEach(button => {
+//         button.addEventListener('click', function() {
+//             // Fetch history data based on the row data
+//             var row = this.closest('tr');
+//             var historyData = row.querySelector('td:nth-child(13)').textContent;
+
+//             // Set the content of the modal
+//             document.getElementById("modal-body").innerText = historyData;
+
+//             // Display the modal
+//             modal.style.display = "block";
+//         });
+//     });
+//     }
+//     // When the user clicks the button, open the modal
+    
+
+//     // When the user clicks on <span> (x), close the modal
+//     span.onclick = function() {
+//         modal.style.display = "none";
+//     }
+
+//     // When the user clicks anywhere outside of the modal, close it
+//     window.onclick = function(event) {
+//         if (event.target == modal) {
+//             modal.style.display = "none";
+//         }
+//     }
+// }
+
+
 function LogoutSession() {
-    alert("Logout!");
     // API : http://localhost:3000/api/logout
     fetch('http://localhost:3000/api/logout', {
         method: 'DELETE',
@@ -11,10 +49,7 @@ function LogoutSession() {
             throw new Error('Logout Gagal!');
         }
 
-        alert('Logout Berhasil!');
     }).catch((error) => {
-        console.log(error);
-        alert('Logout Gagal!');
     }).finally(() => {
         window.location.href = '/'; // Redirect ke halaman utama
     });
@@ -88,6 +123,8 @@ const refreshToken = async () => {
             </ul>
         </li>
         `;
+        
+        console.log('Refresh Token Done', accessToken);
         return accessToken;
     } catch (error) {
         document.getElementById('navbar-right').innerHTML = `
@@ -102,6 +139,27 @@ const refreshToken = async () => {
     }
 }
 
+
+// Fungsi untuk menambahkan kelas blur ke semua elemen kecuali div-light
+function applyBlur() {
+    console.log('applyBlur');
+    const divs = document.querySelectorAll('div');
+    divs.forEach(div => {
+        // Kecuali dengan id="overlay-info"
+        if (div.id !== 'overlay-info') {
+            div.classList.add('blur');
+        }
+    });
+}
+
+// Fungsi untuk menghapus kelas blur dari semua elemen
+function removeBlur() {
+    const divs = document.querySelectorAll('div');
+    divs.forEach(div => {
+        div.classList.remove('blur');
+    });
+}
+
 function closeAlert() {
     // Hapus cookies untuk alertMessage
     document.cookie = "alertMessage=;max-age=0";
@@ -110,6 +168,10 @@ function closeAlert() {
 // Ambil nilai userId, nama, username, email, isAdmin, accessToken dari return refreshToken
 // Membuat main program
 (async () => {
+    // document.addEventListener('DOMContentLoaded', applyBlur);
     const accessToken = await refreshToken();
+    
 })();
+
+
 

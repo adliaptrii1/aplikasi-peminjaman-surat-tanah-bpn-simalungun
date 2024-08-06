@@ -12,6 +12,15 @@
                   <a class="nav-link" href="/">Home</a>
               </li> -->
               <li class="nav-item">
+                <a class="nav-link" href="/">
+                    <% if (title === 'Home') { %>
+                        <strong class="text-light">Home</strong>
+                    <% } else { %>
+                        Home
+                    <% } %>
+                </a>
+              </li>
+              <li class="nav-item" id="nav-pengajuan">
                     <a class="nav-link" href="/pengajuan">
                         <% if (title === 'Pengajuan') { %>
                             <strong class="text-light">Pengajuan</strong>
@@ -31,8 +40,16 @@
               </li>
 
               <li class="nav-item">
-                  <a class="nav-link" href="/pengembalian">Pengembalian</a>
+                  <a class="nav-link" href="/pengembalian">
+                    <% if (title === 'Pengembalian') { %>
+                      <strong class="text-light">Pengembalian</strong>
+                  <% } else { %>
+                      Pengembalian
+                  <% } %>
+                  </a>
               </li>
+              
+
               <li class="nav-item dropdown ">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Denda
@@ -71,7 +88,21 @@
           <!-- Buat login dan register -->
           <div class="ms-auto">
               <ul class="navbar-nav" id="navbar-right">
-                    
+                <li class="nav-item dropdown profile-settings">
+                  <span class="profile-picture">
+                      <img src="/img/profile.png" class="rounded-circle" alt="profile" width="30px">
+                  </span>
+                  <a class="nav-link dropdown-toggle ps-3 pe-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <span class="profile-name">
+                          <!--.User-->${username}
+                      </span>
+                  </a>
+                  <ul class="dropdown-menu">
+                      <li><button class="dropdown-item" href="/profile/">My Profile</button></li>
+                      <li><button class="dropdown-item" href="/logout" onclick="LogoutSession()">Logout</button></li>
+                  </ul>
+              </li>
+              
               </ul>
               
           </div>

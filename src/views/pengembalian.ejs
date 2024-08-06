@@ -20,7 +20,7 @@
         <div class="form-body ">
             <div class="d-flex justify-content-between align-items-center mb-3 border-bottom">
                 <h3 class="fw-bolder">
-                    List Peminjaman
+                    List Pengembalian
                 </h3>
                 <!-- Tombol "Tambah Pengajuan" -->
                 <button class="btn btn-warning mb-4" onclick="TambahPengajuan()">Tambah Pengajuan</button>
@@ -109,10 +109,11 @@
                               <th>Status</th>
                               <th>User</th>
                               <th>Aksi</th>
+                              <th class="d-lg-none">History</th>
                               
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody id="tbody-main">
                             
                           </tbody>
                     </table>
@@ -129,4 +130,4 @@
    
     </div>
 
-<script src="/js/table.js"></script>
+<script src="/js/table-pengembalian.js"></script>

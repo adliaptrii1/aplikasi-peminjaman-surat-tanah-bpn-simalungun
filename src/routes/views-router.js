@@ -11,13 +11,16 @@ router.get('/login', viewsController.renderViewLogin);
 
 router.get('/pengajuan-tambah', viewsController.renderViewTambahPengajuan);
 
+router.get('/pengajuan', viewsController.renderViewPengajuan);
 
-router.get('/register', (req,res) => {
-    res.render('register', {
-        layout : 'layouts/main-layout',
-        title : 'Register',
-    });
-});
+router.get('/pengembalian', viewsController.renderViewPengembalian)
+
+// router.get('/register', (req,res) => {
+//     res.render('register', {
+//         layout : 'layouts/main-layout',
+//         title : 'Register',
+//     });
+// });
 
 router.get('/peminjaman', viewsController.renderViewPeminjaman);
 
