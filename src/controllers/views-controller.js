@@ -84,8 +84,41 @@ const renderViewPengembalian = async (req,res) => {
         message,
         isDanger,
     });
-
 }
+
+const renderViewBeritaAcara = async (req,res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('berita-acara', {
+        layout : 'layouts/main-layout',
+        title : 'Berita Acara',
+        message,
+        isDanger,
+    });
+}
+
+const renderViewPenandatangan = async (req,res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('penandatangan', {
+        layout : 'layouts/main-layout',
+        title : 'Penandatangan',
+        message,
+        isDanger,
+    });
+}
+
+const renderViewPengguna = async (req,res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('pengguna', {
+        layout : 'layouts/main-layout',
+        title : 'Pengguna',
+        message,
+        isDanger,
+    });
+}
+
 
 
 module.exports = {
@@ -94,5 +127,8 @@ module.exports = {
     renderViewTambahPengajuan, 
     renderViewPeminjaman,
     renderViewPengajuan,
-    renderViewPengembalian
+    renderViewPengembalian,
+    renderViewBeritaAcara,
+    renderViewPenandatangan,
+    renderViewPengguna,
 }

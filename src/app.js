@@ -11,6 +11,8 @@ const rightsTypeRoutes = require('./routes/rights-type-router');
 const services = require('./routes/services-router'); 
 const viewsRouter = require('./routes/views-router');
 const loansRouter = require('./routes/loans-router');
+const officersRouter = require('./routes/officers-router');
+const printRouter = require('./routes/print-router');   
 
 // Tuliskan ke console variabel di env
 const db = require('./config/database');
@@ -39,6 +41,10 @@ app.use("/api", kelurahanRoutes);
 app.use("/api", rightsTypeRoutes);
 app.use("/api", services);
 app.use("/api", loansRouter);
+app.use("/api", officersRouter);
+app.use("/api", printRouter);
+
+
 app.use("", viewsRouter);
 
 

@@ -1,0 +1,133 @@
+<!-- Modal -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <div id="modal-body">
+            <!-- Isi modal akan diubah melalui JavaScript -->
+        </div>
+    </div>
+</div>
+
+<div class="form-container container-fluid ">
+    <div class="form ms-auto me-auto mt-5 border">
+        <!-- <div class="form-header position-relative">
+            <div class="circles-header d-flex flex-row-reverse">
+                <div class="rounded-circle bg-danger ms-1" style="height: 12px; width: 12px;"></div>
+                <div class="rounded-circle bg-warning ms-1" style="height: 12px; width: 12px;"></div>
+                <div class="rounded-circle bg-success ms-1" style="height: 12px; width: 12px;"></div>
+            </div>
+        </div> -->
+        <div class="form-body ">
+            <div class="d-flex justify-content-between align-items-center mb-3 border-bottom">
+                <h3 class="fw-bolder">
+                    Berita Acara
+                </h3>
+                <!-- Tombol "Tambah Pengajuan" -->
+                <button class="btn btn-warning mb-4" onclick="TambahPengajuan()">Tambah Pengajuan</button>
+            </div>
+            <div class="table-container">
+                <section class="header">
+                    <div class="items-controller">
+                        <div class="form-item mb-3 date-container">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="search" class="form-label">Search :  </label>
+                                    <input type="text" name="" id="search" placeholder="search" class="form-control">
+                                
+                                </div>
+                                <div class="col">
+                                    <label for="sort-by" class="form-label">Urut Berdasarkan : </label>
+                                    <select id="sort-by" name="sort-by" class="form-control" required>
+                                        <option value="">Pilih...</option>
+                                        <option value=1>Kelurahan</option>
+                                        <option value="2">Kecamatan</option>
+                                        <option value="3">No. Berkas</option>
+                                        <option value="4">No. Hak</option>
+                                        <option value="5">Tipe Hak</option>
+                                        <option value="6">Jenis</option>
+                                        <option value="7">Pelayanan</option>
+                                        <option value="8">Keterangan</option>
+                                        <option value="9">Waktu</option>    
+                                        <option value="10">Status</option>
+                                        <option value="11">User</option>
+                                    </select>
+                                
+                                </div>
+    
+                                <div class="col">
+                                    <label for="sort-type" class="form-label">Tipe Pengurutan : </label>
+                                    <select id="sort-type" name="ward" class="form-control" required>
+                                        <option value="">Pilih...</option>
+                                        <option value=1>Menaik</option>
+                                        <option value="2">Menurun</option>
+
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    <label for="sort-by" class="form-label">Show : </label>
+                                    <select name="" id="itemperpage" class="form-control">
+                                        <option value="05">05</option>
+                                        <option value="10">10</option>
+                                        <option value="25" selected>25</option>
+                                        <option value="50">50</option>
+                                        <!-- Isi dari pilihan kecamatan -->
+                                    </select>
+                                
+                                </div>
+                                <!-- <div class="col"></div>
+                                    <label class="form-label">Show</label>
+                                    <select name="" id="itemperpage" class="form-control">
+                                        
+                                    </select>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="search">
+                        <h5>Search</h5>
+                        <input type="text" name="" id="search" placeholder="search">
+                    </div> -->
+                    
+
+                </section>
+                <section class="field overflow-x-auto">
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                              <!-- <th><input type="checkbox" name="" id="selectAll"></th> -->
+                              <th>No.</th>
+                              <th>Kelurahan</th>
+                              <th>Kecamatan</th>
+                              <th>No. Berkas</th>
+                              <th>No. Hak</th>
+                              <th>Tipe Hak</th>
+                              <th>Jenis</th>
+                              <th>Pelayanan</th>
+                              <th>Keterangan</th>
+                              <th>Waktu</th>
+                              <th>Status</th>
+                              <th>User</th>
+                              <th>Aksi</th>
+                              <th class="d-lg-none">History</th>
+                              
+                            </tr>
+                          </thead>
+                          <tbody id="tbody-main">
+                            
+                          </tbody>
+                    </table>
+                    <div class="bottom-field">
+                        <ul class="pagination">
+                          <li class="prev"><a href="#" id="prev">&#139;</a></li>
+                            <!-- page number here -->
+                          <li class="next"><a href="#" id="next">&#155;</a></li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </div>
+   
+    </div>
+
+<script src="/js/table-berita-acara.js"></script>

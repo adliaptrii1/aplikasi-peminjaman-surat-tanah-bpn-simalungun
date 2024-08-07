@@ -48,38 +48,25 @@
                   <% } %>
                   </a>
               </li>
-              
 
-              <li class="nav-item dropdown ">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Denda
+              <li class="nav-item">
+                <a class="nav-link" href="/berita-acara">
+                  <% if (title === 'Berita Acara') { %>
+                    <strong class="text-light">Berita Acara</strong>
+                <% } else { %>
+                  Berita Acara
+                <% } %>
                 </a>
-                <ul class="dropdown-menu ">
-                  <li><a class="dropdown-item" href="/rusak">Rusak</a></li>
-                  <li><a class="dropdown-item" href="/hilang">Hilang</a></li>
-                  <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-                </ul>
-              </li>
-              <li class="nav-item dropdown ">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Berita Acara  
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Surat Tugas</a></li>
-                  <li><a class="dropdown-item" href="#">Hilang</a></li>
-                  <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-                </ul>
-              </li>
+            </li>
+              
+              
               <li class="nav-item dropdown ">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Basis Data
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Kelurahan</a></li>
-                    <li><a class="dropdown-item" href="#">Kecamatan</a></li>
-                    <li><a class="dropdown-item" href="#">Pelayanan</a></li>
-                    <li><a class="dropdown-item" href="#">Tipe Hak</a></li>
-                    <li><a class="dropdown-item" href="#">Pengguna</a></li>
+                    <li><a class="dropdown-item" href="/pengguna">Pengguna</a></li>
+                    <li><a class="dropdown-item" href="/penandatangan">Penandatangan</a></li>
                   <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
                 </ul>
               </li>

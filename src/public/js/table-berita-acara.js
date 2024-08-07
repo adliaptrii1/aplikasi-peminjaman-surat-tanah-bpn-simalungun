@@ -6,17 +6,15 @@ itemShow = document.querySelector("#itemperpage");
 // isi table
 async function writeTable() {
     const accessToken = await refreshToken();
-
     try {
-        
-
-        const response = await fetch('http://localhost:3000/api/loans?list=2', {
+        const response = await fetch('http://localhost:3000/api/loans?list=3', {
             method: 'GET',
             headers: {
                 // Tambahkan authorization header
                 'Authorization': 'Bearer ' + accessToken,
                 'Content-Type': 'application/json'
             },
+            
         });
 
         if (!response.ok) {
@@ -34,20 +32,16 @@ async function writeTable() {
                 
             </li>`;
 
-            if (data[i].status === 'Diterima') {
-                buttons += `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="acceptFile(${data[i].id})">
-                        <i class="fas fa-check me-1"></i>Terima
-                    </button>
-                </li>`;
-            } else
-            if (data[i].status === 'Peminjaman') {
-                buttons += `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="returnFile(${data[i].id})">
-                        <i class="fas fa-check me-1"></i>Kembalikan
-                    </button>
-                </li>`;
-            }   
+            if (isAdmin) {
+                if (data[i].status === 'Rusak' || data[i].status === 'Hilang' || data[i].status === 'Selesai') {
+                buttons += `
+                    <li>
+                        <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="printBA(${i})">
+                            <i class="fas fa-print me-1"></i>Cetak BA
+                        </button>
+                    </li>`;
+                } 
+            }
 
             // const tr = document.createElement("tr");
             // Tulis di dalam elemen tabel dengan id = "tbody-main"
@@ -80,6 +74,7 @@ async function writeTable() {
                second: '2-digit', 
                timeZoneName: 'short'
            });
+
            // const formattedDate = data[i].createdAt;
            tr.innerHTML = `
            <td>${i+1}</td>
@@ -191,101 +186,238 @@ function showHistory(i) {
     applyBlur();
 }
 
-async function acceptFile(id) {
-    console.log("Accept Request-", id);
-    // Berikan alert namun ada dua pilihan
-    const confirm = window.confirm('Apakah Anda yakin sudah menerima berkas?');
+async function printBA(id) {
+    console.log("Print BA Rusak-", id);
 
-    if (!confirm) return;
+    const overlay = document.getElementById('overlay-info');
 
+    // Ambil dulu data-data officers
     const accessToken = await refreshToken();
 
     try {
-        const response = await fetch(`http://localhost:3000/api/loans/${id}`, {
-            method: 'PUT',
+        const responseOfficers = await fetch('http://localhost:3000/api/officers', {
+            method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + accessToken,
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                status: 'Peminjaman'
-            })
+            }
         });
 
-        if (!response.ok) {
-            throw new Error(response.statusText);
+        if (!responseOfficers.ok) {
+            throw new Error(responseOfficers.statusText);
         }
 
+        const dataOfficers = await responseOfficers.json();
 
-        // Refresh halaman
-        document.cookie = "alertMessage=" + JSON.stringify({
-            message: "Berkas berhasil diterima",
-            isDanger: false
-        }) + ";max-age=5";
+        overlay.innerHTML = `
+            <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+                <h3 class="alert-heading">Cetak Berita Acara Rusak</h3>
+                <hr class="text-dark">
+                
+                <form id="form-cetak-ba">
+                    <div class="form-item mb-3 date-container" id="form-ubah-penandatangan">
+                        <label for="officer" class="form-label">Pilih sebagai Pihak Pertama : </label>
+                        <select id="officer" class="form-select" required>
+                            ${dataOfficers.map((officer, i) => `<option value="${i}">${officer.name}</option>`).join('')}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Cetak</button>
+                </form>
+                <button type="button position-fixed z-5" class="btn-close " data-bs-dismiss="alert" aria-label="Close" onclick="removeBlur()"></button>
+            </div>
+            `;
 
-        window.location.reload();
+        overlay.style.display = 'fixed';
 
+        document.getElementById('form-cetak-ba').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            alert("Submit");
+            // http://localhost:3000/api/berita-acara
+            // {
+            //     "hari" : "Senin",
+            //     "tanggal" : "20",
+            //     "bulan" : "September",
+            //     "tahun" : "2023",
+            //     "nama_pengurus" : "Hoshino Aqua",
+            //     "nama" : "Akane",
+            //     "nip" : "123456",
+            //     "jabatan" : "Kepala Staff Divisi Roya",
+            //     "alamat_pengurus" : "Alamat",
+            //     "kecamatan" : "Siantar Martoba",
+            //     "kelurahan" : "Tambun Nabolon",
+            //     "berkas" : "Surat Tanah"
+            // }
+            const form = e.target;
+            const officerIndex = form.querySelector('#officer').value;
+            const officer = dataOfficers[officerIndex];
 
-    } catch (error) {
-        console.log(error);
+            // Ambil date dari sekarang
+            const date = new Date();
+            const day = date.getUTCDate();
+            const month = date.getUTCMonth();
+            const year = date.getUTCFullYear();
+            const hari = date.toLocaleDateString('id-ID', { weekday: 'long' });
+            const bulan = date.toLocaleDateString('id-ID', { month: 'long' });
 
-        document.cookie = "alertMessage=" + JSON.stringify({
-            message: error.message,
-            isDanger: true
-        }) + ";max-age=5";
-
-        window.location.reload();   
-    }
-}
-
-async function returnFile(id) {
-    console.log("Accept Request-", id);
-    // Berikan alert namun ada dua pilihan
-    const confirm = window.confirm('Apakah Anda yakin ingin mengembalikan berkas?');
-
-    if (!confirm) return;
-
-    const accessToken = await refreshToken();
-
-    try {
-        const response = await fetch(`http://localhost:3000/api/loans/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': 'Bearer ' + accessToken,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                status: 'Pengembalian'
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(response.statusText);
-        }
-
-
-        // Refresh halaman
-        document.cookie = "alertMessage=" + JSON.stringify({
-            message: "Berkas berhasil dikembalikan",
-            isDanger: false
-        }) + ";max-age=5";
-
-        window.location.reload();
-
-
-    } catch (error) {
-        console.log(error);
-
-        document.cookie = "alertMessage=" + JSON.stringify({
-            message: error.message,
-            isDanger: true
-        }) + ";max-age=5";
-
-        window.location.reload();   
-    }
-}
+            // Ambil data "nama", "berkas", "kecamatan", "kelurahan" dari data loan
             
 
+            const data_json = emptyBox[id].querySelectorAll('td');
+            const nama = data_json[11].textContent;
+            const berkas = data_json[6].textContent;
+            const kecamatan = data_json[2].textContent;
+            const kelurahan = data_json[1].textContent;
+            let status = data_json[10].textContent;
+
+            if (status === "Selesai") status = "Baik";
+
+            const data = {
+                hari,
+                tanggal: day,
+                bulan,
+                tahun: year,
+                nama_pengurus: officer.name,
+                nama,
+                nip: officer.nip,
+                jabatan: officer.position,
+                alamat_pengurus: officer.address,
+                kecamatan,
+                kelurahan,
+                berkas,
+                kondisi: status
+            };
+
+            const responseToken = await fetch('http://localhost:3000/api/token');
+
+            if (!responseToken.ok) {
+                throw new Error('Refresh Token Gagal!');
+            }
+
+            const dataToken = await responseToken.json();
+            const accessToken = dataToken.accessToken;
+            alert("Tahan");
+            const response = await fetch('http://localhost:3000/api/berita-acara', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+                
+            });
+
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+
+            alert("Harusnya selesai");
+
+            const blob = await response.blob();
+
+            const url = window.URL.createObjectURL(blob);
+
+            window.open(url);
+
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        document.cookie = "alertMessage=" + JSON.stringify({
+            message: error.message,
+            isDanger: true
+        }) + ";max-age=5";
+
+        window.location.reload();
+    }
+}
+
+async function collectFileBack(id) {
+    console.log("Accept Request-", id);
+    // Berikan alert namun ada 4 pilihan, yaitu, "Ya", "Rusak", "Hilang", "Tidak"
+    const overlay = document.getElementById('overlay-info');
+
+    overlay.innerHTML = `
+    <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+        <h3 class="alert-heading">Konfirmasi Pengembalian</h3>
+        <hr class="text-dark">
+        <p class="text-dark fs-6">Apakah Anda yakin ingin mengkonfirmasi pengembalian ini?</p>
+        <button type="button" class="btn btn-success" onclick="confirmCollectFileBack(${id}, 0)">Ya</button>
+        <button type="button" class="btn btn-danger" onclick="confirmCollectFileBack(${id}, 1)">Rusak</button>
+        <button type="button" class="btn btn-warning" onclick="confirmCollectFileBack(${id}, 2)">Hilang</button>
+        <button type="button position-fixed z-5" class="btn-close " data-bs-dismiss="alert" aria-label="Close" onclick="removeBlur()"></button>
+    </div>
+    `;
+
+    overlay.style.display = 'fixed';
+
+    // Tambahkan kelas blur ke semua elemen
+    applyBlur();
+}
+
+async function confirmCollectFileBack(id, statusId) {
+    const accessToken = await refreshToken();
+
+    try {
+        let statusKonfirm = '';
+        console.log("Confirm Collect File Back-", id, statusId);
+        
+
+        if (statusId === 0) {
+            statusKonfirm  = 'Selesai';
+        } else if (statusId === 1) {
+            statusKonfirm  = 'Rusak';
+        } else if (statusId === 2) {
+            statusKonfirm  = 'Hilang';
+        } else {
+            throw new Error('Status tidak valid');
+        }
+
+        const responseToken = await fetch('http://localhost:3000/api/token');
+        alert("Tahan");
+        if (!responseToken.ok) {
+            throw new Error('Refresh Token Gagal!');
+        }
+
+        const dataToken = await responseToken.json();
+        const accessToken = dataToken.accessToken;
+
+        const response = await fetch(`http://localhost:3000/api/loans/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                status : statusKonfirm
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(response.body);
+        }
+
+        // Refresh halaman
+        document.cookie = "alertMessage=" + JSON.stringify({
+            message: "Berkas berhasil dikembalikan dalam keadaan " + statusKonfirm,
+            isDanger: false
+        }) + ";max-age=5";
+
+        window.location.reload();
+
+
+    } catch (error) {
+        console.log(error.message);
+
+        document.cookie = "alertMessage=" + JSON.stringify({
+            message: error.message,
+            isDanger: true
+        }) + ";max-age=5";
+
+        window.location.reload();
+        
+    }
+}
 
 function giveTrPerPage(){
     console.log("giveTrPerPage");
@@ -359,9 +491,7 @@ function pageRunner(page, items, lastPage, active){
             pageMaker(index, items, active);
         }
     }
-
 }
-
 
 function getpagElement(val){
     let pagelink = pageUl.querySelectorAll("a");
@@ -369,7 +499,6 @@ function getpagElement(val){
     let pageli = pageUl.querySelectorAll('.list');
     // pageli[0].classList.add("active");
     pageRunner(pagelink, val, lastpage, pageli);
-
 }
 
 
@@ -384,7 +513,6 @@ function pageMaker(index, item_per_page, activePage){
     }
     Array.from(activePage).forEach((e)=>{e.classList.remove("active");});
     activePage[index-1].classList.add("active");
-
 }
 
 // search content 
@@ -420,28 +548,7 @@ search.onkeyup = e => {
     pageRunner(pageLink, itemPerPage, lastPage, pageLi);
 }
 
-// document.getElementById('sort-by').addEventListener('change', sortTable);
-// document.getElementById('sort-type').addEventListener('change', sortTable);
 
-// function sortTable() {
-//     const sortBy = document.getElementById('sort-by').value;
-//     const sortType = document.getElementById('sort-type').value;
-//     const rows = Array.from(tbody.querySelectorAll('tr'));
-
-//     rows.sort((a, b) => {
-//         const aVal = a.querySelector(`td:nth-child(${sortBy})`).textContent.trim();
-//         const bVal = b.querySelector(`td:nth-child(${sortBy})`).textContent.trim();
-
-//         if (sortType === 'asc') {
-//             return aVal.localeCompare(bVal);
-//         } else {
-//             return bVal.localeCompare(aVal);
-//         }
-//     });
-
-//     tbody.innerHTML = '';
-//     rows.forEach(row => tbody.appendChild(row));
-// }
 function sortTable() {
     // Hapus semua baris dalam tbody
 
@@ -483,23 +590,22 @@ function sortTable() {
 
     // Tulis ulang kolom ke-0 (nomor urut)
     rows.forEach((row, index) => {
-        let buttons = `
-            <ul style="list-style-type : none; padding: 0;">
-            <li>
-                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 fs-6"   style="width : 90px;" onclick="showHistory(${index})">
+        let buttons = `<ul style="list-style-type : none; padding: 0;"><li>
+                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 fs-6"   style="width : 110px;" onclick="showHistory(${index})">
                     <i class="fas fa-history me-1"></i> History
                 </button>
                 
             </li>`;
 
-        if (isAdmin) {
-            buttons += 
-                `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 90px;" onclick="acceptRequest(${row.querySelectorAll('td')[0].textContent})">
-                        <i class="fas fa-check me-1"></i>Terima
+            if (row.querySelectorAll('td')[10].textContent === 'Rusak' || row.querySelectorAll('td')[10].textContent === 'Hilang' || row.querySelectorAll('td')[10].textContent === 'Selesai') {
+            buttons += `
+                <li>
+                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="printBA(${index})">
+                        <i class="fas fa-print me-1"></i>Cetak BA
                     </button>
                 </li>`;
-        }
+            } 
+            
 
         buttons += '</ul>';
 
@@ -532,7 +638,6 @@ function sortTable() {
 // Event listeners untuk dropdown
 document.getElementById('sort-by').addEventListener('change', sortTable);
 document.getElementById('sort-type').addEventListener('change', sortTable);
-
 
 async function main() {
     // Tunggu writeTable selesai

@@ -6,10 +6,7 @@ itemShow = document.querySelector("#itemperpage");
 // isi table
 async function writeTable() {
     const accessToken = await refreshToken();
-
     try {
-        
-
         const response = await fetch('http://localhost:3000/api/loans?list=3', {
             method: 'GET',
             headers: {
@@ -87,7 +84,7 @@ async function writeTable() {
            <td>${data[i].information}</td>
            <td>${formattedDate}</td>
            <td>${data[i].status}</td>
-           <td>${data[i].user}</td>
+           <td>${data[i].name_user}</td>
             <td>
             <ul style="list-style-type : none; padding: 0;">
                 ${buttons}
@@ -196,8 +193,8 @@ async function collectFileBack(id) {
         <hr class="text-dark">
         <p class="text-dark fs-6">Apakah Anda yakin ingin mengkonfirmasi pengembalian ini?</p>
         <button type="button" class="btn btn-success" onclick="confirmCollectFileBack(${id}, 0)">Ya</button>
-        <button type="button" class="btn btn-success" onclick="confirmCollectFileBack(${id}, 1)">Rusak</button>
-        <button type="button" class="btn btn-success" onclick="confirmCollectFileBack(${id}, 2)">Hilang</button>
+        <button type="button" class="btn btn-danger" onclick="confirmCollectFileBack(${id}, 1)">Rusak</button>
+        <button type="button" class="btn btn-warning" onclick="confirmCollectFileBack(${id}, 2)">Hilang</button>
         <button type="button position-fixed z-5" class="btn-close " data-bs-dismiss="alert" aria-label="Close" onclick="removeBlur()"></button>
     </div>
     `;
@@ -206,50 +203,6 @@ async function collectFileBack(id) {
 
     // Tambahkan kelas blur ke semua elemen
     applyBlur();
-
-
-    // if (!confirm) return;
-
-    // const accessToken = await refreshToken();
-
-    // try {
-    //     const response = await fetch(`http://localhost:3000/api/loans/${id}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Authorization': 'Bearer ' + accessToken,
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             status: 'Diterima'
-    //         })
-    //     });
-
-    //     if (!response.ok) {
-    //         throw new Error(response.statusText);
-    //     }
-
-    //     // Berikan alert bahwa pengajuan berhasil diterima
-    //     alert('Pengajuan berhasil diterima');
-
-    //     // Refresh halaman
-    //     document.cookie = "alertMessage=" + JSON.stringify({
-    //         message: "Pengajuan berhasil diterima",
-    //         isDanger: false
-    //     }) + ";max-age=5";
-
-    //     window.location.reload();
-
-
-    // } catch (error) {
-    //     console.log(error);
-
-    //     document.cookie = "alertMessage=" + JSON.stringify({
-    //         message: error.message,
-    //         isDanger: true
-    //     }) + ";max-age=5";
-
-    //     window.location.reload();   
-    // }
 }
 
 async function confirmCollectFileBack(id, statusId) {

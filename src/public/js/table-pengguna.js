@@ -10,13 +10,14 @@ async function writeTable() {
     try {
         
 
-        const response = await fetch('http://localhost:3000/api/loans?list=2', {
+        const response = await fetch('http://localhost:3000/api/users', {
             method: 'GET',
             headers: {
                 // Tambahkan authorization header
                 'Authorization': 'Bearer ' + accessToken,
                 'Content-Type': 'application/json'
             },
+            
         });
 
         if (!response.ok) {
@@ -28,26 +29,17 @@ async function writeTable() {
 
         for (let i = 0; i < data.length; i++) {
             let buttons = `<li>
-                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 fs-6"   style="width : 110px;" onclick="showHistory(${i})">
-                    <i class="fas fa-history me-1"></i> History
+                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 fs-6"   style="width : 120px;" onclick="updateUser(${i})">
+                    <i class="fas fa-pencil me-1"></i> Ubah Profil
                 </button>
                 
+            </li>
+            <li>
+                <button type="button" class="btn btn-danger my-1 mx-0 px-1 py-0" fs-6 style="width : 120px;" onclick="deleteUser(${data[i].id})">
+                    <i class="fas fa-check me-1"></i>Hapus
+                </button>
             </li>`;
-
-            if (data[i].status === 'Diterima') {
-                buttons += `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="acceptFile(${data[i].id})">
-                        <i class="fas fa-check me-1"></i>Terima
-                    </button>
-                </li>`;
-            } else
-            if (data[i].status === 'Peminjaman') {
-                buttons += `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="returnFile(${data[i].id})">
-                        <i class="fas fa-check me-1"></i>Kembalikan
-                    </button>
-                </li>`;
-            }   
+            
 
             // const tr = document.createElement("tr");
             // Tulis di dalam elemen tabel dengan id = "tbody-main"
@@ -67,39 +59,38 @@ async function writeTable() {
            const minutes = padZero(date.getUTCMinutes());
            const seconds = padZero(date.getUTCSeconds());
 
-           // Membentuk string dalam format DD/MM/YY hh:mm:ss
-           const formattedDate = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-
-           const formatter = new Intl.DateTimeFormat('id-ID', { 
-               weekday: 'long', 
-               year: 'numeric', 
-               month: 'long', 
-               day: 'numeric', 
-               hour: '2-digit', 
-               minute: '2-digit', 
-               second: '2-digit', 
-               timeZoneName: 'short'
-           });
+           if (data[i].isAdmin === 1 || data[i].isAdmin === true) {
+                data[i].isAdmin = 'Staff';
+            } else 
+            if (data[i].isAdmin === false || data[i].isAdmin === 0) {
+                data[i].isAdmin = 'Pengguna';
+            } else 
+            if (data[i].isAdmin === 2) {
+                data[i].isAdmin = 'Admin';
+            }
            // const formattedDate = data[i].createdAt;
+           console.log(data[i]);
+            // <th>Nama</th>
+            // <th>Username</th>
+            // <th>Email</th>
+            // <th>No. Telepon</th>
+            // <th>Password</th>
+            // <th>Admin</th>
+            // <th>Action</th>
            tr.innerHTML = `
-           <td>${i+1}</td>
-           <td>${data[i].kelurahan}</td>
-           <td>${data[i].kecamatan}</td>
-           <td>${data[i].file_number}</td>
-           <td>${data[i].right_number}</td>
-           <td>${data[i].rights_type}</td>
-           <td>${data[i].file}</td>
-           <td>${data[i].service}</td>
-           <td>${data[i].information}</td>
-           <td>${formattedDate}</td>
-           <td>${data[i].status}</td>
-           <td>${data[i].name_user}</td>
+            <td>${i+1}</td>
+            <td>${data[i].name}</td>
+            <td>${data[i].email}</td>
+            <td>${data[i].username}</td>
+            <td>${data[i].phone_number}</td>
+            <td>${data[i].isAdmin}</td>
+
             <td>
             <ul style="list-style-type : none; padding: 0;">
                 ${buttons}
             </ul>
             </td>
-            <td class="d-lg-none">${data[i].history}</td>
+            <td style="display : none;">${data[i].id}</td>
             `;
             tbody.appendChild(tr);
         }
@@ -112,179 +103,8 @@ async function writeTable() {
     }
 }
 
-function showHistory(i) {
-    console.log("Show History-", i);
-    // Cari elemen dengan id "overlay"
-    const overlay = document.getElementById('overlay-info');
-
-    // Ambil data json dari baris ke-i
-    const rows = Array.from(tbody.querySelectorAll('tr'));
-
-    const data_json = emptyBox[i].querySelectorAll('td')[13].textContent;
-
-    // Ubah data json menjadi objek
-    const data = JSON.parse(data_json);
-    console.log(data);
-
-    // tBodyData merupakan string HTML yang akan diisi ke dalam tbody
-    const tBodyData = data.map((item, index) => {
-        console.log(item);
-        const date = new Date(item.date);
-       
-        const padZero = (num) => (num < 10 ? '0' : '') + num;
-
-        // Mendapatkan komponen tanggal dan waktu
-        const day = padZero(date.getUTCDate());
-
-        const month = padZero(date.getUTCMonth() + 1); // Bulan dimulai dari 0
-
-        const year = date.getUTCFullYear().toString().slice(-2);
-
-        const hours = padZero(date.getUTCHours());
-
-        const minutes = padZero(date.getUTCMinutes());
-
-        const seconds = padZero(date.getUTCSeconds());
-
-        console.log(item.date);
-        // Membentuk string dalam format DD/MM/YY hh:mm:ss
-
-        const formattedDate = `${day}/${month}/${year}`;
-        const formattedTime = `${hours}:${minutes}:${seconds}`;
-
-        return `
-        <tr>
-            <td>${index + 1}</td>
-            <td>${item.status}</td>
-            <td>${formattedDate}</td>
-            <td>${formattedTime}</td>
-        </tr>`;
-
-    });
-
-    overlay.innerHTML = `
-    <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
-        <h3 class="alert-heading">History</h3>
-        <hr class="text-dark">
-
-        <table>
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Status</th>
-                    <th>Tanggal</th>
-                    <th>Waktu</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${tBodyData.join('')}
-            </tbody>
-        </table>
-        <button type="button position-fixed z-5" class="btn-close " data-bs-dismiss="alert" aria-label="Close" onclick="removeBlur()"></button>
-    </div>
-        `;
-
-    // Masukkan
-    overlay.style.display = 'fixed';
-    console.log("Overlay");
-    // Tambahkan kelas blur ke semua elemen
-    applyBlur();
-}
-
-async function acceptFile(id) {
-    console.log("Accept Request-", id);
-    // Berikan alert namun ada dua pilihan
-    const confirm = window.confirm('Apakah Anda yakin sudah menerima berkas?');
-
-    if (!confirm) return;
-
-    const accessToken = await refreshToken();
-
-    try {
-        const response = await fetch(`http://localhost:3000/api/loans/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': 'Bearer ' + accessToken,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                status: 'Peminjaman'
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(response.statusText);
-        }
 
 
-        // Refresh halaman
-        document.cookie = "alertMessage=" + JSON.stringify({
-            message: "Berkas berhasil diterima",
-            isDanger: false
-        }) + ";max-age=5";
-
-        window.location.reload();
-
-
-    } catch (error) {
-        console.log(error);
-
-        document.cookie = "alertMessage=" + JSON.stringify({
-            message: error.message,
-            isDanger: true
-        }) + ";max-age=5";
-
-        window.location.reload();   
-    }
-}
-
-async function returnFile(id) {
-    console.log("Accept Request-", id);
-    // Berikan alert namun ada dua pilihan
-    const confirm = window.confirm('Apakah Anda yakin ingin mengembalikan berkas?');
-
-    if (!confirm) return;
-
-    const accessToken = await refreshToken();
-
-    try {
-        const response = await fetch(`http://localhost:3000/api/loans/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': 'Bearer ' + accessToken,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                status: 'Pengembalian'
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(response.statusText);
-        }
-
-
-        // Refresh halaman
-        document.cookie = "alertMessage=" + JSON.stringify({
-            message: "Berkas berhasil dikembalikan",
-            isDanger: false
-        }) + ";max-age=5";
-
-        window.location.reload();
-
-
-    } catch (error) {
-        console.log(error);
-
-        document.cookie = "alertMessage=" + JSON.stringify({
-            message: error.message,
-            isDanger: true
-        }) + ";max-age=5";
-
-        window.location.reload();   
-    }
-}
-            
 
 
 function giveTrPerPage(){
@@ -359,9 +179,7 @@ function pageRunner(page, items, lastPage, active){
             pageMaker(index, items, active);
         }
     }
-
 }
-
 
 function getpagElement(val){
     let pagelink = pageUl.querySelectorAll("a");
@@ -369,7 +187,6 @@ function getpagElement(val){
     let pageli = pageUl.querySelectorAll('.list');
     // pageli[0].classList.add("active");
     pageRunner(pagelink, val, lastpage, pageli);
-
 }
 
 
@@ -384,7 +201,6 @@ function pageMaker(index, item_per_page, activePage){
     }
     Array.from(activePage).forEach((e)=>{e.classList.remove("active");});
     activePage[index-1].classList.add("active");
-
 }
 
 // search content 
@@ -486,16 +302,15 @@ function sortTable() {
         let buttons = `
             <ul style="list-style-type : none; padding: 0;">
             <li>
-                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 fs-6"   style="width : 90px;" onclick="showHistory(${index})">
+                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 fs-6"   style="width : 90px;" onclick="updateUser(${index})">
                     <i class="fas fa-history me-1"></i> History
                 </button>
                 
             </li>`;
-
         if (isAdmin) {
             buttons += 
                 `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 90px;" onclick="acceptRequest(${row.querySelectorAll('td')[0].textContent})">
+                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 90px;" onclick="deleteUser(${row.querySelectorAll('td')[0].textContent})">
                         <i class="fas fa-check me-1"></i>Terima
                     </button>
                 </li>`;
@@ -528,6 +343,8 @@ function sortTable() {
     pageLi = pageUl.querySelectorAll('.list'); pageLi[0].classList.add("active");
     pageRunner(pageLink, itemPerPage, lastPage, pageLi);
 }
+
+
 
 // Event listeners untuk dropdown
 document.getElementById('sort-by').addEventListener('change', sortTable);

@@ -24,5 +24,11 @@ router.get('/pengembalian', viewsController.renderViewPengembalian)
 
 router.get('/peminjaman', viewsController.renderViewPeminjaman);
 
+router.get('/berita-acara', viewsController.renderViewBeritaAcara);
+
+router.get('/penandatangan', viewsController.renderViewPenandatangan);
+
+router.get('/pengguna', viewsController.renderViewPengguna);
+
 module.exports = router;
 

@@ -7,7 +7,7 @@ const isAdmin = require('../middleware/verify-admin');
 
 // router.post('/users', userController.createUser);
 router.get('/users', isAdmin, userController.getUsers);
-router.post('/register', userController.Register);
+router.post('/register', isAdmin, userController.Register);
 router.post('/login', userController.Login);
 router.get('/token', refreshToken);
 router.delete('/logout', userController.Logout);

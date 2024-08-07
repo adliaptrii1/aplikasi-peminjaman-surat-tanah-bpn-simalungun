@@ -5,9 +5,9 @@ const kecamatanController = require('../controllers/kecamatan-controller');
 const isAdmin = require('../middleware/verify-admin');
 
 router.get('/kecamatan', kecamatanController.getKecamatan);
-router.post('/kecamatan', kecamatanController.createKecamatan);
+router.post('/kecamatan', isAdmin, kecamatanController.createKecamatan);
 router.get('/kecamatan/:id', kecamatanController.getKecamatanById);
-router.put('/kecamatan/:id', kecamatanController.updateKecamatan);
-router.delete('/kecamatan/:id', kecamatanController.deleteKecamatan);
+router.put('/kecamatan/:id', isAdmin, kecamatanController.updateKecamatan);
+router.delete('/kecamatan/:id', isAdmin, kecamatanController.deleteKecamatan);
 
 module.exports = router;

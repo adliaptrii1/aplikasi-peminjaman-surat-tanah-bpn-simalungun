@@ -39,7 +39,7 @@ const getLoans = async (req, res) => {
                     },
                     {
                         model: Users,
-                        attributes: ['username'],
+                        attributes: ['username', 'name'],
                         as: 'user',
                     },{
                         model: Kelurahan,
@@ -74,7 +74,7 @@ const getLoans = async (req, res) => {
                     },
                     {
                         model: Users,
-                        attributes: ['username'],
+                        attributes: ['username', 'name'],
                         as: 'user',
                     },{
                         model: Kelurahan,
@@ -109,7 +109,7 @@ const getLoans = async (req, res) => {
                     },
                     {
                         model: Users,
-                        attributes: ['username'],
+                        attributes: ['username', 'name'],
                         as: 'user',
                     },{
                         model: Kelurahan,
@@ -144,7 +144,7 @@ const getLoans = async (req, res) => {
                     },
                     {
                         model: Users,
-                        attributes: ['username'],
+                        attributes: ['username', 'name'],
                         as: 'user',
                     },{
                         model: Kelurahan,
@@ -158,8 +158,46 @@ const getLoans = async (req, res) => {
                     },
                 ]
             });
-
+        } else 
+        if (list === 4) {
+            // Cari loans dengan status = "Rusak" atau "Hilang"
+            loans = await Loans.findAll({
+                where: {
+                    status: ['Rusak', 'Hilang']
+                },
+                attributes: ['id', 'file_number', 'right_number', 'file', 'information', 'history', 'createdAt', 'updatedAt', 'status', 'id_kelurahan', 'id_rights_type', 'id_service', 'id_user'],
+                include: [
+                    {
+                        model: RightsType,
+                        attributes: ['name'],
+                        as: 'rights_type',
+                    },
+                    {
+                        model: Services,
+                        attributes: ['service'],
+                        as: 'service',
+                    },
+                    {
+                        model: Users,
+                        attributes: ['username', 'name'],
+                        as: 'user',
+                    },{
+                        model: Kelurahan,
+                        attributes: ['name'],
+                        as: 'kelurahan',
+                        include: {
+                            model: Kecamatan,
+                            attributes: ['name'],
+                            as: 'kecamatan',
+                        }
+                    },
+                ]
+            });
+        } else {
+            res.status(400).json({message: "List tidak valid!"});
+            return;
         }
+
         console.log("=============")
         console.log(`REQ =`);
         console.log(req);
@@ -177,6 +215,7 @@ const getLoans = async (req, res) => {
                     id_rights_type: loans[i].id_rights_type,
                     service: loans[i].service.service,
                     id_service: loans[i].id_service,
+                    name_user : loans[i].user.name,
                     user: loans[i].user.username,
                     id_user: loans[i].id_user,
                     file_number: loans[i].file_number,

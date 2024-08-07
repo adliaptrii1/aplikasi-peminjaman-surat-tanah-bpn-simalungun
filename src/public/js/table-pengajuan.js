@@ -75,6 +75,8 @@ async function writeTable() {
                timeZoneName: 'short'
            });
            // const formattedDate = data[i].createdAt;
+           console.log(data[i]);
+
            tr.innerHTML = `
            <td>${i+1}</td>
            <td>${data[i].kelurahan}</td>
@@ -87,7 +89,7 @@ async function writeTable() {
            <td>${data[i].information}</td>
            <td>${formattedDate}</td>
            <td>${data[i].status}</td>
-           <td>${data[i].user}</td>
+           <td>${data[i].name_user}</td>
             <td>
             <ul style="list-style-type : none; padding: 0;">
                 ${buttons}

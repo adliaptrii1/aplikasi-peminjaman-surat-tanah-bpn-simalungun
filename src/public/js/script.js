@@ -144,9 +144,10 @@ const refreshToken = async () => {
 function applyBlur() {
     console.log('applyBlur');
     const divs = document.querySelectorAll('div');
+    const form = document.querySelectorAll('form');
     divs.forEach(div => {
         // Kecuali dengan id="overlay-info"
-        if (div.id !== 'overlay-info') {
+        if (div.id !== 'overlay-info' ) {
             div.classList.add('blur');
         }
     });

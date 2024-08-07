@@ -7,9 +7,11 @@ const getUsers = async (req, res) => {
   console.log(`req.email : ${req.email}`);
   try {
     const users = await Users.findAll({
-      attributes : ['id', 'name', 'username', 'email', 'phone_number', 'isAdmin'],
+      attributes : ['id', 'name', 'username', 'email', 'phone_number', 'isAdmin', 'password'],
     }
     );
+
+
     res.status(200).json(users);
   } catch (error) {
     // res.status(500).json({ message: error.message });
@@ -19,20 +21,27 @@ const getUsers = async (req, res) => {
 }
 
 const Register = async (req, res) => {
-  const {name, username, email, phone_number, password, confirmPassword} = req.body;
-  if (password !== confirmPassword) {
-    res.status(400).json({message: "Password tidak sama!"});
-  }
+  console.log("Sedang register");
+  const {name, username, email, phone_number, password, isAdmin} = req.body;
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   try {
+    console.log("Sedang register 2");
+    console.log(`Name : ${name}`);
+    console.log(`Username : ${username}`);
+    console.log(`Email : ${email}`);
+    console.log(`Phone Number : ${phone_number}`);
+    console.log(`Password
+    : ${password
+    }`);
+    console.log(`isAdmin : ${isAdmin}`);
     await Users.create({
       name,
       username,
       email,
       phone_number,
-      isAdmin: false,
+      isAdmin,
       password: hashedPassword,
     });
     res.status(201).json({message: "Register sukses!"});
