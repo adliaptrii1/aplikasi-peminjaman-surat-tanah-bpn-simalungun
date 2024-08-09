@@ -10,6 +10,7 @@ const Kelurahan = db.define('kelurahan', {
         type: DataTypes.STRING,
         primaryKey: true,
         allowNull: false,
+        autoIncrement: true,
     },
     name: {
         type: DataTypes.STRING,

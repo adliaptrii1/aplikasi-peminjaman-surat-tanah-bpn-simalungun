@@ -4,8 +4,8 @@ import LogoutSession from './utils/logout-session.js';
 import { closeAlert } from './utils/alert-message.js';
 
 // PROGRAM UTAMA
-const user = await refreshToken();
-setNavbar(user);
+const pengguna = await refreshToken();
+setNavbar(pengguna);
 
 const btnLogout = document.getElementById('btn-logout');
 

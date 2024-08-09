@@ -173,9 +173,89 @@ const Logout = async (req, res) => {
   res.status(200);
 }
 
+const UpdateUser = async (req, res) => {
+  const id = req.params.id;
+  const {name, username, email, phone_number, isAdmin} = req.body;
+
+  try {
+    const user = await Users.findByPk(id);
+    if (user) {
+      if (user.email != email) {
+        const checkEmail = await Users.findOne({ where: { email } });
+        if (checkEmail) {
+          return res.status(400).json({ message: `User dengan email ${email} sudah ada!` });
+        }
+      }
+
+      if (user.username != username) {
+        // Cek apakah username yang sedang login adalah admin
+        if (req.isAdmin != 2) {
+          return res.status(401).json({message: "Anda tidak memiliki akses! (Bukan admin)"});
+        }
+
+        const checkUsername = await Users.findOne({ where: { username } });
+        if (checkUsername) {
+          return res.status(400).json({ message: `User dengan username ${username} sudah ada!` });
+        }
+      }
+
+      user.name = name;
+      user.username = username;
+      user.email = email;
+      user.phone_number = phone_number;
+      
+
+      // Cek apakah akun administrator berusaha mengubah isAdmin
+      if (req.isAdmin == 2 && user.isAdmin != 2 && isAdmin == 2) {
+        return res.status(401).json({message: "Anda tidak memiliki akses!"});
+      }
+
+      // Selain admin, tidak ada yang bisa mengubah role
+      if (req.isAdmin != 2 && user.isAdmin != isAdmin) {
+        return res.status(401).json({message: "Anda tidak memiliki akses untuk mengubah role!"});
+      }
+
+      user.isAdmin = isAdmin;
+
+      await user.save();
+      res.status(200).json({message: `User dengan id ${id} telah diupdate!`});
+    }
+  } catch (error) {
+    res.status(500).json({message: error.message});
+  }
+  
+}
+
+const DeleteUser = async (req, res) => {
+  if (req.isAdmin != 2) {
+    return res.status(401).json({message: "Anda tidak memiliki akses untuk menghapus akun!"});
+  }
+
+  const id = req.params.id;
+
+  try {
+    const user = await Users.findByPk(id);
+    if (user) {
+      // Jika user yang akan dihapus adalah admin, maka tidak boleh dihapus
+      if (user.isAdmin == 2) {
+        return res.status(401).json({message: "Tidak bisa menghapus akun admin!"});
+      }
+
+      await user.destroy();
+      res.status(200).json({message: `User dengan id ${id} telah dihapus!`});
+    } else {
+      res.status(404).json({message: `User dengan id ${id} tidak ditemukan!`});
+    }
+  } catch (error) {
+    res.status(500).json({message: error.message});
+  }
+}
+
 module.exports = {
   getUsers,
   Register,
   Login,
   Logout,
+  UpdateUser,
+  DeleteUser,
 }

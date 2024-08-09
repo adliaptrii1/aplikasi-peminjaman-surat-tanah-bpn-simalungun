@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
 const db = require('../config/database');
-const { unsignedDecimalNumber } = require('docx');
 
 const { DataTypes } = Sequelize;
 
@@ -9,6 +8,7 @@ const Kecamatan = db.define('kecamatan', {
         type: DataTypes.STRING,
         primaryKey: true,
         allowNull: false,
+        autoIncrement: true,
     },
     name: {
         type: DataTypes.STRING,

@@ -15,15 +15,25 @@ const getOfficers = async (req, res) => {
 
 const createOfficers = async (req, res) => {
     const { name, position, nip, golongan } = req.body;
-    try {
-        const officers = await Officers.findOne({ where: { nip : toInt(nip)} });
-        if (officers) {
-            res.status(400).json({ message: `Pegawai dengan NIP ${nip} sudah ada!` });
-        }
-        // console.log(`Officer : `)
-        // console.log(officers);
-        console.log(`Officer dengan NIP ${nip} belum ada!`);
 
+    // Cek isAdmin apakah dia Administator atau bukan
+    if (req.isAdmin != 2) {
+        return res.status(401).json({ message: "Anda tidak memiliki akses!" });
+    }
+
+    const officers = await Officers.findOne({ 
+        where: { nip : toInt(nip)} ,
+        attributes: ['id'],
+    });
+    console.log("Mencari officer selesai")
+    if (officers) {
+        console.log(`Officer dengan NIP ${nip} sudah ada!`);
+        await res.status(409).json({ message: `Pegawai dengan NIP ${nip} sudah ada!` });
+
+        return res;
+    }
+
+    try {
         await Officers.create({
             name,
             position,
@@ -55,17 +65,23 @@ const updateOfficers = async (req, res) => {
     console.log("Execute updateOfficers");
     const id = req.params.id;
     const { name, position, nip, golongan } = req.body;
+
+    if (req.isAdmin != 2) {
+        return res.status(401).json({ message: "Anda tidak memiliki akses!" });
+    }
+
     try {
         const officers = await Officers.findByPk(id);
         if (officers) {
-            officers.name = name;
-            officers.position = position;
-            if (officers.nip !== nip) {
+            
+            if (officers.nip != nip) {
                 const checkNip = await Officers.findOne({ where: { nip } });
                 if (checkNip) {
                     return res.status(400).json({ message: `Pegawai dengan NIP ${nip} sudah ada!` });
                 }
             }
+            officers.name = name;
+            officers.position = position;
             officers.nip = nip;
             officers.golongan = golongan;
             await officers.save();
@@ -80,6 +96,10 @@ const updateOfficers = async (req, res) => {
 }
 
 const deleteOfficers = async (req, res) => {
+    if (req.isAdmin != 2) {
+        return res.status(401).json({ message: "Anda tidak memiliki akses!" });
+    }
+
     console.log("Execute deleteOfficers");
     const id = req.params.id;
     console.log(`id-officer : ${id}`);

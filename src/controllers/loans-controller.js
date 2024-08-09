@@ -281,7 +281,8 @@ const createLoans = async (req, res) => {
             history: JSON.stringify([
                 {
                     status: 'Pengajuan',
-                    date: date.toString()
+                    date: date.toString(),
+                    confirmed_by : req.username
                 }
             ]),
             
@@ -382,7 +383,8 @@ const upgradeLoans = async (req, res) => {
         let history = JSON.parse(loans.history);
         history.push({
             status,
-            date: date.toString()
+            date: date.toString(),
+            confirmed_by : req.username
         });
 
         await Loans.update({

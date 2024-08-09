@@ -73,9 +73,11 @@ const createKelurahan = async (req, res) => {
         // Cek apakah ada kelurahan dengan nama dan id_kecamatan yang sama
         const kelurahan = await Kelurahan.findOne({ where: { name, id_kecamatan } });
         if (kelurahan) {
-            res.status(400).json({message: `Kelurahan dengan nama ${name} dan id_kecamatan ${id_kecamatan} sudah ada!`});
-            return;
+            return res.status(400).json({message: `Kelurahan dengan nama ${name} dan id_kecamatan ${id_kecamatan} sudah ada!`});
+            
         }
+
+        console.log("Aman dari duplicate");
         await Kelurahan.create({
             name,
             id_kecamatan,

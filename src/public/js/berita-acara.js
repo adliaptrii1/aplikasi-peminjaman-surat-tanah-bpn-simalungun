@@ -5,15 +5,15 @@ import TambahPengajuan from './controllers/pengajuan-controller.js';
 import createAlertMessage from './utils/alert-message.js';
 import { dateToString } from './utils/datetime-to-string.js';
 
-const user = await refreshToken();
+const pengguna = await refreshToken();
 
-if (!user) {
+if (!pengguna) {
     createAlertMessage("Login terlebih dahulu!", true);
 
     window.location.href = '/login';
 }
 
-const tableLoans = await new TableLoans("berita-acara", user.getIsAdmin());
+const tableLoans = await new TableLoans("berita-acara", pengguna.getIsAdmin());
 
 await tableLoans.setListLoanFromAPI("?list=4");
 
@@ -50,13 +50,13 @@ function sortTable() {
 
 async function printBA(idx) {
     console.log("Print BA dengan index : " + idx);
-    const user = await refreshToken();
+    const pengguna = await refreshToken();
 
     try {
         const responseOfficers = await fetch('http://localhost:3000/api/officers', {
             method: 'GET',
             headers: {
-                'Authorization': 'Bearer ' + user.getAccessToken(),
+                'Authorization': 'Bearer ' + pengguna.getAccessToken(),
                 'Content-Type': 'application/json'
             }
         }); 
@@ -158,16 +158,16 @@ async function printBA(idx) {
                 kondisi,
             };
 
-            const user = await refreshToken();
+            const pengguna = await refreshToken();
 
-            if (user === null) {
+            if (pengguna === null) {
                 throw new Error("Token tidak valid");
             }
 
             const response = await fetch(`http://localhost:3000/api/berita-acara`, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${user.getAccessToken()}`,
+                    Authorization: `Bearer ${pengguna.getAccessToken()}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data),
@@ -210,12 +210,12 @@ async function confirmprintBA(idx, statusId) {
             throw new Error("Status tidak valid");
         }
 
-        const user = await refreshToken();
+        const pengguna = await refreshToken();
 
         const response = await fetch(`http://localhost:3000/api/loans/${tableLoans.getLoanByIdx(idx).getId()}`, {
             method: 'PUT',
             headers: {
-                Authorization: `Bearer ${user.getAccessToken()}`,
+                Authorization: `Bearer ${pengguna.getAccessToken()}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({

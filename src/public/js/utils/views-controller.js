@@ -1,5 +1,5 @@
-const setNavbar = (user) => {
-    if (user === undefined || user === null) {
+const setNavbar = (pengguna) => {
+    if (pengguna === undefined || pengguna === null) {
         document.getElementById('navbarNav').innerHTML = `
             <ul class="navbar-nav">
               <li class="nav-item">
@@ -26,13 +26,13 @@ const setNavbar = (user) => {
         return;
     } 
 
-    // Apabila user adalah pengguna biasa
-    if (user.getIsAdmin() === 0 || user.getIsAdmin() === false) {
+    // Apabila pengguna adalah pengguna biasa
+    if (pengguna.getIsAdmin() === 0 || pengguna.getIsAdmin() === false) {
         document.getElementById('li-berita-acara').classList.add('d-none');
     }
 
-    // Apabila user adalah staff
-    if (user.getIsAdmin() <= 1 || user.getIsAdmin() === true) {
+    // Apabila pengguna adalah staff
+    if (pengguna.getIsAdmin() <= 1 || pengguna.getIsAdmin() === true) {
         document.getElementById('li-basis-data').classList.add('d-none');
     }
 
@@ -43,7 +43,7 @@ const setNavbar = (user) => {
             </span>
             <a class="nav-link dropdown-toggle ps-3 pe-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="profile-name">
-                    ${user.getNama()}
+                    ${pengguna.getNama()}
                 </span>
             </a>
             <ul class="dropdown-menu">

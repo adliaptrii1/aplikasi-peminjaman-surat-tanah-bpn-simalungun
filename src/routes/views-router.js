@@ -15,6 +15,13 @@ router.get('/pengajuan', viewsController.renderViewPengajuan);
 
 router.get('/pengembalian', viewsController.renderViewPengembalian)
 
+router.get('/kecamatan', viewsController.renderViewKecamatan);
+
+router.get('/kelurahan', viewsController.renderViewKelurahan);
+
+router.get('/tipe-hak', viewsController.renderViewTipeHak);
+
+router.get('/tipe-pelayanan', viewsController.renderViewTipePelayanan);
 // router.get('/register', (req,res) => {
 //     res.render('register', {
 //         layout : 'layouts/main-layout',

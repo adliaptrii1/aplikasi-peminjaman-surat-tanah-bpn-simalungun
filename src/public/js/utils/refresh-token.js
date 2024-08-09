@@ -1,4 +1,4 @@
-import User from '../models/pengguna.js';
+import Pengguna from '../models/pengguna.js';
 
 const refreshToken = async () => {
     try {
@@ -10,7 +10,7 @@ const refreshToken = async () => {
         const accessToken = await data.accessToken;
         const decodedToken = await jwt_decode(accessToken);
 
-        const ret = new User(decodedToken.name, decodedToken.username, decodedToken.email, decodedToken.isAdmin, accessToken);
+        const ret = new Pengguna(0, decodedToken.name, decodedToken.username, decodedToken.email, decodedToken.isAdmin, accessToken);
         
         // console.log("Refresh Token Success");
         return ret;

@@ -29,6 +29,7 @@ const Officers = db.define('officers', {
     nip: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        unique: true,
     },
     golongan: {
         type: DataTypes.STRING,

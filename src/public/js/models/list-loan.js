@@ -1,6 +1,5 @@
 import Loan from './loan.js';
 import refreshToken from '../utils/refresh-token.js';
-import User from './pengguna.js';
 
 class ListLoan {
     /* Constructor */

@@ -4,15 +4,15 @@ import { removeBlur } from './utils/blur-effect.js';
 import TambahPengajuan from './controllers/pengajuan-controller.js';
 import createAlertMessage from './utils/alert-message.js';
 
-const user = await refreshToken();
+const pengguna = await refreshToken();
 
-if (!user) {
+if (!pengguna) {
     createAlertMessage("Login terlebih dahulu!", true);
 
     window.location.href = '/login';
 }
 
-const tableLoans = await new TableLoans("peminjaman", user.getIsAdmin());
+const tableLoans = await new TableLoans("peminjaman", pengguna.getIsAdmin());
 
 await tableLoans.setListLoanFromAPI("?list=2");
 
@@ -54,13 +54,13 @@ async function acceptFile(index) {
         return;
     }
 
-    const user = await refreshToken();
+    const pengguna = await refreshToken();
 
     try {
         const response = await fetch(`http://localhost:3000/api/loans/${tableLoans.getLoanByIdx(index).getId()}`, {
             method: 'PUT',
             headers: {
-                Authorization: `Bearer ${user.getAccessToken()}`,
+                Authorization: `Bearer ${pengguna.getAccessToken()}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -69,7 +69,7 @@ async function acceptFile(index) {
         });
 
         if (!response.ok) {
-            alert(user.getAccessToken());
+            alert(pengguna.getAccessToken());
             throw new Error(response.statusText);
         }
 
@@ -92,13 +92,13 @@ async function returnFile(idx) {
         return;
     }
 
-    const user = await refreshToken();
+    const pengguna = await refreshToken();
 
     try {
         const response = await fetch(`http://localhost:3000/api/loans/${tableLoans.getLoanByIdx(idx).getId()}`, {
             method: 'PUT',
             headers: {
-                Authorization: `Bearer ${user.getAccessToken()}`,
+                Authorization: `Bearer ${pengguna.getAccessToken()}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({

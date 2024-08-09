@@ -20,10 +20,10 @@
         <div class="form-body ">
             <div class="d-flex justify-content-between align-items-center mb-3 border-bottom">
                 <h3 class="fw-bolder">
-                    List Penandatangan
+                    List Tipe Hak
                 </h3>
                 <!-- Tombol "Tambah Pengajuan" -->
-                <button class="btn btn-warning mb-4" onclick="TambahOfficer()">Tambah Penandatangan</button>
+                <button class="btn btn-warning mb-4" onclick="TambahRightsType()">Tambah Tipe Hak</button>
             </div>
             <div class="table-container">
                 <section class="header">
@@ -33,17 +33,6 @@
                                 <div class="col">
                                     <label for="search" class="form-label">Search :  </label>
                                     <input type="text" name="" id="search" placeholder="search" class="form-control">
-                                
-                                </div>
-                                <div class="col">
-                                    <label for="sort-by" class="form-label">Urut Berdasarkan : </label>
-                                    <select id="sort-by" name="sort-by" class="form-control" required>
-                                        <option value="">Pilih...</option>
-                                        <option value=1>Nama</option>
-                                        <option value="2">Jabatan</option>
-                                        <option value="3">NIP</option>
-                                        <option value="4">Golongan</option>
-                                    </select>
                                 
                                 </div>
     
@@ -81,10 +70,6 @@
                               <!-- <th><input type="checkbox" name="" id="selectAll"></th> -->
                               <th>No.</th>
                               <th>Nama</th>
-                              <th>Jabatan</th>
-                              <th>NIP</th>
-                              <th>Golongan</th>
-                            
                               <th>Aksi</th>
                               <!-- Buat row untuk hidden -->
                                 <th style="display: none;">id</th>
@@ -108,4 +93,4 @@
    
     </div>
 
-<script src="/js/penandatangan.js" type="module"></script>
+<script src="/js/rights-type.js" type="module"></script>

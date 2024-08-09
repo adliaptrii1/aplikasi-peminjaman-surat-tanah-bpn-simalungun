@@ -14,18 +14,13 @@ const getKecamatan = async (req, res) => {
 }
 
 const createKecamatan = async (req, res) => {
-    const {id, name} = req.body;
+    const {name} = req.body;
     try {
-        const kecamatan = await Kecamatan.findOne({ where: { id } });
+        const kecamatan = await Kecamatan.findOne({ where: { name } });
         if (kecamatan) {
-            res.status(400).json({message: `Kecamatan dengan id ${id} sudah ada!`});
-        }
-        const kecamatan2 = await Kecamatan.findOne({ where: { name } });
-        if (kecamatan2) {
             res.status(400).json({message: `Kecamatan dengan nama ${name} sudah ada!`});
         }
         await Kecamatan.create({
-            id,
             name,
         });
         

@@ -50,10 +50,10 @@ const updateServices = async (req, res) => {
     const id = req.params.id;
     const {service} = req.body;
     try {
-        const service = await Services.findByPk(id);
-        if (service) {
-            service.service = service;
-            await service.save();
+        const serviceData = await Services.findByPk(id);
+        if (serviceData) {
+            serviceData.service = service;
+            await serviceData.save();
             res.status(200).json({message: `Services dengan id ${id} telah diupdate!`});
         } else {
             res.status(404).json({message: `Services dengan id ${id} tidak ditemukan!`});

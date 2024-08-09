@@ -1,17 +1,25 @@
 // User.js
+const _id = Symbol('id');
 const _nama = Symbol('nama');
 const _username = Symbol('username');
 const _email = Symbol('email');
 const _isAdmin = Symbol('isAdmin');
 const _accessToken = Symbol('accessToken');
+const _phone_number = Symbol('phone_number');
 
-class User {
-  constructor(nama, username, email, isAdmin = false, accessToken) {
+class Pengguna {
+  constructor(id, nama, username, email, isAdmin = 0, accessToken, phone_number) {
+    this[_id] = id;
     this[_nama] = nama;
     this[_username] = username;
     this[_email] = email;
     this[_isAdmin] = isAdmin;
     this[_accessToken] = accessToken;
+    this[_phone_number] = phone_number;
+  }
+
+  getId() {
+    return this[_id];
   }
 
   // Getter untuk nama
@@ -62,10 +70,14 @@ class User {
     this[_accessToken] = accessToken;
   }
 
-  // Method untuk menampilkan informasi pengguna
-  toString() {
-    return `Nama: ${this.getNama()}, Username: ${this.getUsername()}, Email: ${this.getEmail()}, Is Admin: ${this.getIsAdmin()}`;
+  getPhoneNumber() {
+    return this[_phone_number];
   }
+
+  setPhoneNumber(phone_number) {
+    this[_phone_number] = phone_number
+  }
+
 }
 
-export default User;
+export default Pengguna;

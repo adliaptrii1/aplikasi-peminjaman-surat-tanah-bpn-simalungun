@@ -20,10 +20,10 @@
         <div class="form-body ">
             <div class="d-flex justify-content-between align-items-center mb-3 border-bottom">
                 <h3 class="fw-bolder">
-                    List Penandatangan
+                    List Kelurahan
                 </h3>
                 <!-- Tombol "Tambah Pengajuan" -->
-                <button class="btn btn-warning mb-4" onclick="TambahOfficer()">Tambah Penandatangan</button>
+                <button class="btn btn-warning mb-4" onclick="TambahKelurahan()">Tambah Kelurahan</button>
             </div>
             <div class="table-container">
                 <section class="header">
@@ -35,25 +35,20 @@
                                     <input type="text" name="" id="search" placeholder="search" class="form-control">
                                 
                                 </div>
-                                <div class="col">
-                                    <label for="sort-by" class="form-label">Urut Berdasarkan : </label>
-                                    <select id="sort-by" name="sort-by" class="form-control" required>
-                                        <option value="">Pilih...</option>
-                                        <option value=1>Nama</option>
-                                        <option value="2">Jabatan</option>
-                                        <option value="3">NIP</option>
-                                        <option value="4">Golongan</option>
-                                    </select>
-                                
-                                </div>
     
                                 <div class="col">
-                                    <label for="sort-type" class="form-label">Tipe Pengurutan : </label>
-                                    <select id="sort-type" name="ward" class="form-control" required>
-                                        <option value=>Pilih...</option>
-                                        <option value=1>Menaik</option>
-                                        <option value=2>Menurun</option>
+                                    <label for="sort-by" class="form-label">Tipe Urutan :  </label>
+                                    <select id="sort-type" name="sort-type" class="form-control" required>
+                                        <option value="">Pilih...</option>
+                                        <option value="1">Menaik</option>
+                                        <option value="2">Menurun</option>
+                                    </select>
+                                </div>
 
+                                <div class="col">
+                                    <label for="kecamatan-type" class="form-label">Kecamatan : </label>
+                                    <select id="kecamatan-type" name="kecamatan-type" class="form-control" required>
+                                        <option value="">Pilih...</option>
                                     </select>
                                 </div>
                                 <div class="col">
@@ -81,10 +76,7 @@
                               <!-- <th><input type="checkbox" name="" id="selectAll"></th> -->
                               <th>No.</th>
                               <th>Nama</th>
-                              <th>Jabatan</th>
-                              <th>NIP</th>
-                              <th>Golongan</th>
-                            
+                              <!-- <th>Kecamatan</th> -->
                               <th>Aksi</th>
                               <!-- Buat row untuk hidden -->
                                 <th style="display: none;">id</th>
@@ -108,4 +100,4 @@
    
     </div>
 
-<script src="/js/penandatangan.js" type="module"></script>
+<script src="/js/kelurahan.js" type="module"></script>

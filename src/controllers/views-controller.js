@@ -119,6 +119,49 @@ const renderViewPengguna = async (req,res) => {
     });
 }
 
+const renderViewKecamatan = async (req,res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('kecamatan', {
+        layout : 'layouts/main-layout',
+        title : 'Kecamatan',
+        message,
+        isDanger,
+    });
+}
+
+const renderViewKelurahan = async (req,res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('kelurahan', {
+        layout : 'layouts/main-layout',
+        title : 'Kelurahan',
+        message,
+        isDanger,
+    });
+}
+
+const renderViewTipeHak = async (req,res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('tipe-hak', {
+        layout : 'layouts/main-layout',
+        title : 'Tipe Hak',
+        message,
+        isDanger,
+    });
+}
+
+const renderViewTipePelayanan = async (req,res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('tipe-pelayanan', {
+        layout : 'layouts/main-layout',
+        title : 'Tipe Pelayanan',
+        message,
+        isDanger,
+    });
+}
 
 
 module.exports = {
@@ -131,4 +174,8 @@ module.exports = {
     renderViewBeritaAcara,
     renderViewPenandatangan,
     renderViewPengguna,
+    renderViewKecamatan,
+    renderViewKelurahan,
+    renderViewTipeHak,
+    renderViewTipePelayanan
 }

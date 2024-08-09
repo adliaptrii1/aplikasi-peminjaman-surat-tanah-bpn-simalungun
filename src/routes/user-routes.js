@@ -11,6 +11,8 @@ router.post('/register', isAdmin, userController.Register);
 router.post('/login', userController.Login);
 router.get('/token', refreshToken);
 router.delete('/logout', userController.Logout);
+router.put('/users/:id', verifyToken, userController.UpdateUser);
+router.delete('/users/:id', verifyToken, userController.DeleteUser);
 // router.get('/users/:id', userController.getUser);
 // router.put('/users/:id', userController.updateUser);
 // router.delete('/users/:id', userController.deleteUser);

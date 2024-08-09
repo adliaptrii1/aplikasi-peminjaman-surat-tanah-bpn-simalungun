@@ -3,6 +3,8 @@ const createAlertMessage = (message, isDanger) => {
         message,
         isDanger
     })};max-age=5`;
+
+    console.log("Alert message created");
 };
 
 export const closeAlert = () => {

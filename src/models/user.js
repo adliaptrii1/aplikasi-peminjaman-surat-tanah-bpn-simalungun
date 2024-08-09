@@ -46,7 +46,7 @@ const Users = db.define('users', {
     allowNull: false,
   },
   isAdmin: {
-    type: DataTypes.BOOLEAN,
+    type: DataTypes.INTEGER,
     allowNull: false,
     defaultValue: false,
   },

@@ -1,7 +1,7 @@
 import ListLoan from "./list-loan.js";
 import { isAdministrator, isStaff, isUser } from "../utils/check-role.js";
 import dateTimeToString, { dateTimeToDateString, dateTimeToTimeString } from "../utils/datetime-to-string.js";
-import { applyBlur, removeBlur } from "../utils/blur-effect.js";
+import { applyBlur} from "../utils/blur-effect.js";
 
 class TableLoans {
     /* Properties */
@@ -289,6 +289,7 @@ class TableLoans {
                             <th>Status</th>
                             <th>Tanggal</th>
                             <th>Waktu</th>
+                            <th>Dikonfirmasi Oleh</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -298,6 +299,11 @@ class TableLoans {
             const date = new Date(data.date);
             const dateStr = dateTimeToDateString(date);
             const timeStr = dateTimeToTimeString(date);
+            
+            let confirmedBy = data.confirmed_by;
+            if (confirmedBy === undefined) {
+                confirmedBy = "-";
+            }
 
             ret += `
                 <tr>
@@ -305,6 +311,7 @@ class TableLoans {
                     <td>${data.status}</td>
                     <td>${dateStr}</td>
                     <td>${timeStr}</td>
+                    <td>${confirmedBy}</td>
                 </tr>
             `;
         });
