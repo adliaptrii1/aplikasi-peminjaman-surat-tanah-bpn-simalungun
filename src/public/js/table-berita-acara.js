@@ -215,7 +215,7 @@ async function printBA(id) {
                 <hr class="text-dark">
                 
                 <form id="form-cetak-ba">
-                    <div class="form-item mb-3 date-container" id="form-ubah-penandatangan">
+                    <div class="form-item mb-3 date-container" id="form-berita-acara">
                         <label for="officer" class="form-label">Pilih sebagai Pihak Pertama : </label>
                         <select id="officer" class="form-select" required>
                             ${dataOfficers.map((officer, i) => `<option value="${i}">${officer.name}</option>`).join('')}
@@ -232,21 +232,7 @@ async function printBA(id) {
         document.getElementById('form-cetak-ba').addEventListener('submit', async function (e) {
             e.preventDefault();
             alert("Submit");
-            // http://localhost:3000/api/berita-acara
-            // {
-            //     "hari" : "Senin",
-            //     "tanggal" : "20",
-            //     "bulan" : "September",
-            //     "tahun" : "2023",
-            //     "nama_pengurus" : "Hoshino Aqua",
-            //     "nama" : "Akane",
-            //     "nip" : "123456",
-            //     "jabatan" : "Kepala Staff Divisi Roya",
-            //     "alamat_pengurus" : "Alamat",
-            //     "kecamatan" : "Siantar Martoba",
-            //     "kelurahan" : "Tambun Nabolon",
-            //     "berkas" : "Surat Tanah"
-            // }
+            
             const form = e.target;
             const officerIndex = form.querySelector('#officer').value;
             const officer = dataOfficers[officerIndex];

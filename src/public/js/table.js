@@ -1,3 +1,5 @@
+import refreshToken from './utils/refresh-token.js';
+
 let tbody, pageUl, itemShow, tr, emptyBox, index, itemPerPage;
 tbody = document.querySelector("tbody");
 pageUl = document.querySelector(".pagination");
@@ -388,37 +390,37 @@ function pageMaker(index, item_per_page, activePage){
 }
 
 // search content 
-search = document.getElementById("search");
-search.onkeyup = e => {
-    const text = e.target.value.toLowerCase();
+// search = document.getElementById("search");
+// search.onkeyup = e => {
+//     const text = e.target.value.toLowerCase();
 
-    displayPage(emptyBox.length);
+//     displayPage(emptyBox.length);
 
-    for (let i = 1; i < tr.length; i++) {
-        const tds = tr[i].querySelectorAll("td");
-        let match = false;
-        for (let j = 0; j < tds.length; j++) {
-            if (tds[j].innerText.toLowerCase().indexOf(text) > -1) {
-                match = true;
-                break;
-            }
-        }
-        if (match) {
-            tr[i].style.display = "";
-        } else {
-            tr[i].style.display = "none";
-        }
-    }
+//     for (let i = 1; i < tr.length; i++) {
+//         const tds = tr[i].querySelectorAll("td");
+//         let match = false;
+//         for (let j = 0; j < tds.length; j++) {
+//             if (tds[j].innerText.toLowerCase().indexOf(text) > -1) {
+//                 match = true;
+//                 break;
+//             }
+//         }
+//         if (match) {
+//             tr[i].style.display = "";
+//         } else {
+//             tr[i].style.display = "none";
+//         }
+//     }
 
-    displayPage(itemPerPage);
-    pageGenerator(itemPerPage);
-    getpagElement(itemPerPage);
+//     displayPage(itemPerPage);
+//     pageGenerator(itemPerPage);
+//     getpagElement(itemPerPage);
 
-    let pageLink = pageUl.querySelectorAll("a");
-    let lastPage =  pageLink.length - 2;
-    pageLi = pageUl.querySelectorAll('.list'); pageLi[0].classList.add("active");
-    pageRunner(pageLink, itemPerPage, lastPage, pageLi);
-}
+//     let pageLink = pageUl.querySelectorAll("a");
+//     let lastPage =  pageLink.length - 2;
+//     pageLi = pageUl.querySelectorAll('.list'); pageLi[0].classList.add("active");
+//     pageRunner(pageLink, itemPerPage, lastPage, pageLi);
+// }
 
 // document.getElementById('sort-by').addEventListener('change', sortTable);
 // document.getElementById('sort-type').addEventListener('change', sortTable);

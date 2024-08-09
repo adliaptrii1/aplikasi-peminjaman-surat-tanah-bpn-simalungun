@@ -10,4 +10,6 @@ router.post('/loans', verifyToken,
 
 router.put('/loans/:id', verifyToken, loansController.upgradeLoans);
 
+router.delete('/loans/:id', verifyToken, loansController.deleteLoans);
+
 module.exports = router;

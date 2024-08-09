@@ -8,19 +8,16 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-              <!-- <li class="nav-item">
-                  <a class="nav-link" href="/">Home</a>
-              </li> -->
-              <li class="nav-item">
-                <a class="nav-link" href="/">
-                    <% if (title === 'Home') { %>
-                        <strong class="text-light">Home</strong>
-                    <% } else { %>
-                        Home
-                    <% } %>
-                </a>
-              </li>
-              <li class="nav-item" id="nav-pengajuan">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <% if (title === 'Home') { %>
+                            <strong class="text-light">Home</strong>
+                        <% } else { %>
+                            Home
+                        <% } %>
+                    </a>
+                </li>
+                <li class="nav-item" id="nav-pengajuan">
                     <a class="nav-link" href="/pengajuan">
                         <% if (title === 'Pengajuan') { %>
                             <strong class="text-light">Pengajuan</strong>
@@ -28,8 +25,8 @@
                             Pengajuan
                         <% } %>
                     </a>
-              </li>
-              <li class="nav-item">
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/peminjaman">
                         <% if (title === 'Peminjaman') { %>
                             <strong class="text-light">Peminjaman</strong>
@@ -37,39 +34,38 @@
                             Peminjaman
                         <% } %>
                     </a>
-              </li>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/pengembalian">
+                        <% if (title === 'Pengembalian') { %>
+                            <strong class="text-light">Pengembalian</strong>
+                        <% } else { %>
+                            Pengembalian
+                        <% } %>
+                    </a>
+                </li>
 
-              <li class="nav-item">
-                  <a class="nav-link" href="/pengembalian">
-                    <% if (title === 'Pengembalian') { %>
-                      <strong class="text-light">Pengembalian</strong>
-                  <% } else { %>
-                      Pengembalian
-                  <% } %>
-                  </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link" href="/berita-acara">
-                  <% if (title === 'Berita Acara') { %>
-                    <strong class="text-light">Berita Acara</strong>
-                <% } else { %>
-                  Berita Acara
-                <% } %>
-                </a>
-            </li>
+                <li class="nav-item" id="li-berita-acara">
+                    <a class="nav-link" href="/berita-acara">
+                        <% if (title === 'Berita Acara') { %>
+                            <strong class="text-light">Berita Acara</strong>
+                        <% } else { %>
+                            Berita Acara
+                        <% } %>
+                    </a>
+                </li>
               
               
-              <li class="nav-item dropdown ">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Basis Data
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/pengguna">Pengguna</a></li>
-                    <li><a class="dropdown-item" href="/penandatangan">Penandatangan</a></li>
-                  <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-                </ul>
-              </li>
+                <li class="nav-item dropdown" id="li-basis-data">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Basis Data
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/pengguna">Pengguna</a></li>
+                        <li><a class="dropdown-item" href="/penandatangan">Penandatangan</a></li>
+                    <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                    </ul>
+                </li>
           </ul>
           
           <!-- Buat login dan register -->
@@ -86,7 +82,7 @@
                   </a>
                   <ul class="dropdown-menu">
                       <li><button class="dropdown-item" href="/profile/">My Profile</button></li>
-                      <li><button class="dropdown-item" href="/logout" onclick="LogoutSession()">Logout</button></li>
+                      <li><button class="dropdown-item" id="btn-logout">Logout</button></li>
                   </ul>
               </li>
               

@@ -14,15 +14,6 @@ const getLoans = async (req, res) => {
         }
 
         let loans;
-
-        // SELECT loans.id, kelurahan.name as kelurahan, kecamatan.name as kecamatan ,rights_type.name as rights_type, services.service as service, users.username as user, loans.file_number, loans.right_number, loans.file, loans.information, loans.history, loans.createdAt, loans.updatedAt, loans.status
-        // FROM loans
-        // JOIN kelurahan ON loans.id_kelurahan = kelurahan.id
-        // JOIN kecamatan ON kelurahan.id_kecamatan = kecamatan.id
-        // JOIN rights_type ON loans.id_rights_type = rights_type.id
-        // JOIN services ON loans.id_service = services.id
-        // JOIN users ON loans.id_user = users.id;
-        // Gunakan query diatas untuk mengambil data loans
         if (list === undefined) {
             loans = await Loans.findAll({
                 attributes: ['id', 'file_number', 'right_number', 'file', 'information', 'history', 'createdAt', 'updatedAt', 'status', 'id_kelurahan', 'id_rights_type', 'id_service', 'id_user'],
@@ -275,12 +266,8 @@ const createLoans = async (req, res) => {
     }
 
     try {
-        // Dapatkan waktu terlebih dahulu
         const date = new Date();
-        date.setHours(date.getHours() + 7);
-
-
-
+    
         await Loans.create({
             id_kelurahan,
             id_rights_type,
@@ -297,10 +284,6 @@ const createLoans = async (req, res) => {
                     date: date.toString()
                 }
             ]),
-
-            createdAt: date,
-            updatedAt: date,
-            
             
             status: 'Pengajuan',
         });
@@ -395,7 +378,6 @@ const upgradeLoans = async (req, res) => {
         // if (loans.)
 
         const date = new Date();
-        date.setHours(date.getHours() + 7);
 
         let history = JSON.parse(loans.history);
         history.push({
@@ -418,8 +400,59 @@ const upgradeLoans = async (req, res) => {
         res.status(500).json({message: "Internal Server Error!"});
     }
 }
-    
+
+const deleteLoans = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const loans = await Loans.findOne({
+            where: {
+                id
+            }
+        });
+
+        if (!req.isAdmin) {
+            // Cek data user dengan username yang sedang login
+            const user = await Users.findOne({
+                where: {
+                    username: req.username
+                }
+            });
+
+            if (!user) {
+                res.status(404).json({message: `User dengan username ${req.username} tidak ditemukan!`});
+                return;
+            }
+
+            if (user.id !== loans.id_user) {
+                res.status(403).json({message: "Hanya user yang mengajukan yang bisa menghapus pengajuan!"});
+                return;
+            }
+
+        }
+
+        if (!loans) {
+            res.status(404).json({message: `Pengajuan dengan id ${id} tidak ditemukan!`});
+            return;
+        }
+
+        if (loans.status !== "Pengajuan") {
+            res.status(403).json({message: "Pengajuan yang sudah diterima, dipinjamkan, atau sedang dipinjamkan tidak bisa dihapus!"});
+            return;
+        }
+
+        await Loans.destroy({
+            where: {
+                id
+            }
+        });
+
+        res.status(200).json({message: "Pengajuan berhasil dihapus!"});
+    } catch (error) {
+        res.status(500).json({message: "Internal Server Error!"});
+    }
+}
 
 module.exports = { 
-    getLoans, createLoans, upgradeLoans
+    getLoans, createLoans, upgradeLoans, deleteLoans
 };

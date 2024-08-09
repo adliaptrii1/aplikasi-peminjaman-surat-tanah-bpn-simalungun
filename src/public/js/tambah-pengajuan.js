@@ -1,4 +1,3 @@
-const otakudes = 10;
 
 function FillKecamatan() {
     fetch('http://localhost:3000/api/kecamatan')
@@ -97,18 +96,6 @@ const addPengajuan = async(event) =>  {
         const id_service = document.getElementById('service').value;
         const information = document.getElementById('information').value;
 
-        console.log(1);
-        
-        // Cek input checkbox
-        // await proses forEach
-
-        // console.log(`Buku Tanah = ${document.getElementById('bt').checked}`);
-        // console.log(`Surat Tanah = ${document.getElementById('st').checked}`);
-        // console.log(`Warkah = ${document.getElementById('warkah').checked}`);   
-        
-
-        // Tambahkan cookies untuk alertMessag
-
         let fileInput = "";
         if (document.getElementById('bt').checked) {
             fileInput = "Buku Tanah";
@@ -165,10 +152,6 @@ const addPengajuan = async(event) =>  {
                 isDanger: false
             }) + ";max-age=5";
 
-            console.log(6);
-
-            alert("DATA BERHASIL DITAMBAH")
-
             window.location.href = '/pengajuan';
 
             
@@ -186,7 +169,6 @@ const addPengajuan = async(event) =>  {
 }
 
 document.getElementById('form-pengajuan').addEventListener('submit', addPengajuan);
-
 
 FillKecamatan();
 FillServices();
