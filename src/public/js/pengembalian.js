@@ -88,10 +88,10 @@ async function acceptFile(index) {
 async function collectFileBack(idx) {
 
     const overlayContent = `
-        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
         <h3 class="alert-heading">Konfirmasi Pengembalian</h3>
         <hr class="text-dark">
-        <p class="text-dark fs-6">Apakah Anda yakin ingin mengkonfirmasi pengembalian ini?</p>
+        <p class="text-dark ">Apakah Anda yakin ingin mengkonfirmasi pengembalian ini?</p>
         <button type="button" class="btn btn-success" onclick="confirmCollectFileBack(${idx}, 0)">Ya</button>
         <button type="button" class="btn btn-danger" onclick="confirmCollectFileBack(${idx}, 1)">Rusak</button>
         <button type="button" class="btn btn-warning" onclick="confirmCollectFileBack(${idx}, 2)">Hilang</button>

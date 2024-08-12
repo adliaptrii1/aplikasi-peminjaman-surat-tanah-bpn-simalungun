@@ -2,21 +2,11 @@
 const { Sequelize } = require('sequelize');
 const db = require('../config/database');
 const { unsignedDecimalNumber } = require('docx');
+const refreshToken = require('../utils/refresh-token');
 
 const { DataTypes } = Sequelize;
 
 const Users = db.define('users', {
-  // CREATE TABLE `users` (
-  //   `id` int(11) UNSIGNED NOT NULL,
-  //   `name` varchar(100) NOT NULL,
-  //   `email` varchar(50) NOT NULL,
-  //   `phone_number` varchar(20) NOT NULL,
-  //   `password` varchar(255) NOT NULL,
-  //   `isAdmin` tinyint(1) NOT NULL DEFAULT 0,
-  //   `access_token` text DEFAULT NULL,
-  //   `refresh_token` text DEFAULT NULL
-  // ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -36,10 +26,16 @@ const Users = db.define('users', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
   phone_number: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  nik: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
@@ -50,11 +46,20 @@ const Users = db.define('users', {
     allowNull: false,
     defaultValue: false,
   },
+  address: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   // access_token: {
   //   type: DataTypes.TEXT,
   //   allowNull: true,
   // },
   refresh_token: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+
+  reset_pass_token: {
     type: DataTypes.TEXT,
     allowNull: true,
   },

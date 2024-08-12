@@ -6,9 +6,11 @@ const _email = Symbol('email');
 const _isAdmin = Symbol('isAdmin');
 const _accessToken = Symbol('accessToken');
 const _phone_number = Symbol('phone_number');
+const _nik = Symbol('nik');
+const _address = Symbol('address');
 
 class Pengguna {
-  constructor(id, nama, username, email, isAdmin = 0, accessToken, phone_number) {
+  constructor(id, nama, username, email, isAdmin = 0, accessToken, phone_number, nik, address) {
     this[_id] = id;
     this[_nama] = nama;
     this[_username] = username;
@@ -16,6 +18,8 @@ class Pengguna {
     this[_isAdmin] = isAdmin;
     this[_accessToken] = accessToken;
     this[_phone_number] = phone_number;
+    this[_nik] = nik;
+    this[_address] = address;
   }
 
   getId() {
@@ -76,6 +80,22 @@ class Pengguna {
 
   setPhoneNumber(phone_number) {
     this[_phone_number] = phone_number
+  }
+
+  getNIK() {
+    return this[_nik];
+  }
+
+  setNIK(nik) {
+    this[_nik] = nik;
+  }
+
+  getAddress() {
+    return this[_address];
+  }
+
+  setAddress(address) {
+    this[_address] = address;
   }
 
 }

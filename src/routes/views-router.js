@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const refreshToken = require('../utils/refresh-token');
 const viewsController = require('../controllers/views-controller');
 const expressLayouts = require('express-ejs-layouts');
-const verifyToken = require('../middleware/verify-token');
+
 
 router.get('/', viewsController.renderViewIndex);
 
 router.get('/login', viewsController.renderViewLogin);
+
+router.get('/register', viewsController.renderViewRegister);
 
 router.get('/pengajuan-tambah', viewsController.renderViewTambahPengajuan);
 
@@ -36,6 +37,10 @@ router.get('/berita-acara', viewsController.renderViewBeritaAcara);
 router.get('/penandatangan', viewsController.renderViewPenandatangan);
 
 router.get('/pengguna', viewsController.renderViewPengguna);
+
+router.get('/forgot-password', viewsController.renderViewForgotPassword);
+
+router.get('/reset-password', viewsController.renderViewResetPassword);
 
 module.exports = router;
 

@@ -30,7 +30,7 @@ async function writeTable() {
 
         for (let i = 0; i < data.length; i++) {
             let buttons = `<li>
-                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 fs-6"   style="width : 110px;" onclick="showHistory(${i})">
+                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 "   style="width : 110px;" onclick="showHistory(${i})">
                     <i class="fas fa-history me-1"></i> History
                 </button>
                 
@@ -38,14 +38,14 @@ async function writeTable() {
 
             if (data[i].status === 'Diterima') {
                 buttons += `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="acceptFile(${data[i].id})">
+                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0"  style="width : 110px;" onclick="acceptFile(${data[i].id})">
                         <i class="fas fa-check me-1"></i>Terima
                     </button>
                 </li>`;
             } else
             if (data[i].status === 'Peminjaman') {
                 buttons += `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="returnFile(${data[i].id})">
+                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0"  style="width : 110px;" onclick="returnFile(${data[i].id})">
                         <i class="fas fa-check me-1"></i>Kembalikan
                     </button>
                 </li>`;
@@ -165,7 +165,7 @@ function showHistory(i) {
     });
 
     overlay.innerHTML = `
-    <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+    <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
         <h3 class="alert-heading">History</h3>
         <hr class="text-dark">
 
@@ -488,7 +488,7 @@ function sortTable() {
         let buttons = `
             <ul style="list-style-type : none; padding: 0;">
             <li>
-                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 fs-6"   style="width : 90px;" onclick="showHistory(${index})">
+                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0"   style="width : 90px;" onclick="showHistory(${index})">
                     <i class="fas fa-history me-1"></i> History
                 </button>
                 
@@ -497,7 +497,7 @@ function sortTable() {
         if (isAdmin) {
             buttons += 
                 `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 90px;" onclick="acceptRequest(${row.querySelectorAll('td')[0].textContent})">
+                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0"  style="width : 90px;" onclick="acceptRequest(${row.querySelectorAll('td')[0].textContent})">
                         <i class="fas fa-check me-1"></i>Terima
                     </button>
                 </li>`;

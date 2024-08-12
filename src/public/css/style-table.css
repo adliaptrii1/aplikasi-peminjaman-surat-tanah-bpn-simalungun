@@ -28,7 +28,7 @@
 }
 table{
     width: 100%;
-    font-size: 15px;
+    font-size: 13px;
     margin: 2px auto;
     table-layout: auto;
     color: #1f1f1f;
@@ -40,8 +40,12 @@ table{
 table tr th, td{
     padding: 10px;
     border: 1px solid #ccc;
-    
 }
+
+thead{
+  background-color: aliceblue;
+}
+
 .bottom-field{
     width: 100%;
     padding: 20px;

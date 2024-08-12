@@ -24,7 +24,7 @@ class ListPengguna {
             const data = await response.json();
             console.log(data);
             data.forEach((pengguna) => {
-                const newPengguna = new Pengguna(pengguna.id, pengguna.name, pengguna.username, pengguna.email, pengguna.isAdmin, "" ,pengguna.phone_number);
+                const newPengguna = new Pengguna(pengguna.id, pengguna.name, pengguna.username, pengguna.email, pengguna.isAdmin, "" ,pengguna.phone_number, pengguna.nik, pengguna.address);
                 this._list_pengguna.push(newPengguna);
             });
 
@@ -87,15 +87,37 @@ class ListPengguna {
         });
     }
 
-    sortByRole(asc) {
+    sortByAddress(asc) {
         this._list_pengguna.sort((a, b) => {
             if (asc) {
-                return a.getIsAdmin().localeCompare(b.getIsAdmin());
+                return a.getAddress().localeCompare(b.getAddress());
             } else {
-                return b.getIsAdmin().localeCompare(a.getIsAdmin());
+                return b.getAddress().localeCompare(a.getAddress());
             }
         });
     }
+
+    sortByNIK(asc) {
+        this._list_pengguna.sort((a, b) => {
+            if (asc) {
+                return a.getNIK().localeCompare(b.getNIK());
+            } else {
+                return b.getNIK().localeCompare(a.getNIK());
+            }
+        });
+    }
+
+    sortByRole(asc) {
+        this._list_pengguna.sort((a, b) => {
+            if (asc) {
+                return a.getIsAdmin() - (b.getIsAdmin());
+            } else {
+                return b.getIsAdmin() - (a.getIsAdmin());
+            }
+        });
+    }
+
+
 
     deletePenggunaByIndex(index) {
         this._list_pengguna.splice(index, 1);

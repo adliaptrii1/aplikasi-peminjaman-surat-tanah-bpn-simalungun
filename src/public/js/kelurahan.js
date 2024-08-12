@@ -68,7 +68,7 @@ function sortTable() {
 async function TambahKelurahan(idx) {
 
     const overlayContent = `
-        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
         <h3 class="alert-heading">Tambah Data Kelurahan</h3>
         <hr class="text-dark">
 
@@ -146,7 +146,7 @@ async function editKelurahan(idx) {
     }).join('');
 
     const overlayContent = `
-        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
         <h3 class="alert-heading">Edit Data Kelurahan</h3>
         <hr class="text-dark">
 

@@ -7,10 +7,10 @@ const Docxtemplater = require('docxtemplater');
 const createBeritaAcara = async (req, res) => {
     console.log(req.body);
 
-    const data = req.body;
+    const data = req.body;  
 
     // Baca template docx
-    const content = fs.readFileSync(path.resolve(__dirname, '../../docs/berita_acara_template.docx'), 'binary');
+    const content = fs.readFileSync(path.resolve(__dirname, `../../docs/berita_acara_${data.kondisi}_template.docx`), 'binary');
   
     const zip = new PizZip(content);
     const doc = new Docxtemplater(zip, {
@@ -20,7 +20,7 @@ const createBeritaAcara = async (req, res) => {
 
     // Ganti placeholder dengan data
     doc.setData(data);
-
+    console.log("SetData");
     try {
         doc.render();
         const buf = doc.getZip().generate({ type: 'nodebuffer' });

@@ -122,15 +122,17 @@ class TablePengguna {
                 <td>${pengguna.getEmail()}</td>
                 <td>${pengguna.getPhoneNumber()}</td>
                 <td>${role}</td>
+                <td>${pengguna.getNIK()}</td>
+                <td>${pengguna.getAddress()}</td>
                 <td>
                     <ul class="list-unstyled">
                     <li>
-                        <button type="button" class="btn btn-secondary my-1 mx-0 px-1 py-0 fs-6" style="width : 90px;" onclick="editPengguna(${index})">
+                        <button type="button" class="btn btn-secondary my-1 mx-0 px-1 py-0 " style="width : 80px; height : 30px;" onclick="editPengguna(${index})">
                             <i class="fas fa-edit me-1 text-light"></i> Edit
                         </button>
                     </li>
                     <li>
-                        <button type="button" class="btn btn-danger my-1 mx-0 px-1 py-0 fs-6" style="width : 90px;" onclick="deletePengguna(${index})">
+                        <button type="button" class="btn btn-danger my-1 mx-0 px-1 py-0 " style="width : 80px; height : 30px;" onclick="deletePengguna(${index})">
                             <i class="fas fa-trash me-1 text-light"></i> Delete
                         </button>
                     </li>
@@ -160,6 +162,12 @@ class TablePengguna {
                 break;
             case 5:
                 this.getListPengguna().sortByRole(asc);
+                break;
+            case 6:
+                this.getListPengguna().sortByNIK(asc);
+                break;
+            case 7: 
+                this.getListPengguna().sortByAddress(asc);
                 break;
         }
     }

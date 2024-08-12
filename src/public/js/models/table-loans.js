@@ -121,77 +121,6 @@ class TableLoans {
     }
 
     /* Method Function Get */
-    getTableLoans() {
-        console.log(this._typeDataLoans);
-        const listLoan = this._listLoan.getListLoan();
-
-        let tBody = "";
-
-        listLoan.forEach((loan, index) => {
-            let buttons = `<ul class="list-unstyled">
-                <li>
-                    <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 fs-6"   style="width : 90px;" onclick="showHistory(${index})">
-                        <i class="fas fa-history me-1"></i> History
-                    </button>
-                </li>`
-            ;
-
-            if (this._typeDataLoans == "pengajuan" && loan.getStatus() === 'Pengajuan') {
-                if (isStaff(this._role) || isAdministrator(this._role)) {
-                    buttons += `<li>
-                        <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 90px;" onclick="acceptRequest(${index})">
-                            <i class="fas fa-check me-1"></i>Terima
-                        </button>
-                    </li>`;
-                } else if (isUser(this._role)) {
-                    buttons += `<li>
-                        <button type="button" class="btn btn-danger my-1 mx-0 px-1 py-0" fs-6 style="width : 90px;" id="removeRequest(${index})">
-                            <i class="fas fa-trash me-1 text-light"></i>Delete
-                        </button>
-                    </li>`;
-                }
-            } else 
-
-            if (this._typeDataLoans == "peminjaman") {
-                console.log("Peminjaman");
-                if (loan.getStatus() === 'Diterima') {
-                    buttons += `<li>
-                        <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="acceptFile(${index})">
-                            <i class="fas fa-check me-1"></i>Terima
-                        </button>
-                    </li>`;
-                } else if (loan.getStatus() === 'Peminjaman') {
-                    buttons += `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 110px;" onclick="returnFile(${index})">
-                        <i class="fas fa-check me-1"></i>Kembalikan
-                    </button>
-                </li>`;
-                }
-            }
-
-            buttons += `</ul>`;
-
-            tBody += `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${loan.getKelurahan()}</td>
-                    <td>${loan.getKecamatan()}</td>
-                    <td>${loan.getFileNumber()}</td>
-                    <td>${loan.getRightNumber()}</td>
-                    <td>${loan.getRightsType()}</td>
-                    <td>${loan.getFile()}</td>
-                    <td>${loan.getService()}</td>
-                    <td>${loan.getInformation()}</td>
-                    <td>${dateTimeToString(loan.getUpdatedAt())}</td>
-                    <td>${loan.getStatus()}</td>
-                    <td>${loan.getNameUser()}</td>
-                    <td>${buttons}</td>
-                </tr>
-            `;
-        });
-
-        return table;
-    }
 
     getTableLoanByIndex(index) {
         const loan = this._listLoan.getLoanByIdx(index);
@@ -199,7 +128,7 @@ class TableLoans {
         let buttons = `
         <ul class="list-unstyled">
             <li>
-                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 fs-6"   style="width : 90px;" onclick="showHistory(${index})">
+                <button type="button" class="btn btn-primary  my-1 mx-0 px-1 py-0 "   style="width : 80px; height : 30px;" onclick="showHistory(${index})">
                     <i class="fas fa-history me-1"></i> History
                 </button>
             </li>`;
@@ -207,13 +136,13 @@ class TableLoans {
         if (this._typeDataLoans == "pengajuan" && loan.getStatus() === 'Pengajuan') {
             if (isStaff(this._role) || isAdministrator(this._role)) {
                 buttons += `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" fs-6 style="width : 90px;" onclick="acceptRequest(${index})">
+                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0"  style="width : 80px; height : 30px;" onclick="acceptRequest(${index})">
                         <i class="fas fa-check me-1"></i>Terima
                     </button>
                 </li>`;
             } else if (isUser(this._role)) {
                 buttons += `<li>
-                    <button type="button" class="btn btn-danger my-1 mx-0 px-1 py-0" fs-6 style="width : 90px;" onclick="removeRequest(${index})">
+                    <button type="button" class="btn btn-danger my-1 mx-0 px-1 py-0"  style="width : 80px; height : 30px;" onclick="removeRequest(${index})">
                         <i class="fas fa-trash me-1 text-light"></i>Delete
                     </button>
                 </li>`;
@@ -224,13 +153,13 @@ class TableLoans {
             console.log("Peminjaman");
             if (loan.getStatus() === 'Diterima') {
                 buttons += `<li>
-                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" style="width : 90px;" onclick="acceptFile(${index})">
+                    <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" style="width : 80px; height : 30px;" onclick="acceptFile(${index})">
                         <i class="fas fa-file me-1"></i>Confirm
                     </button>
                 </li>`;
             } else if (loan.getStatus() === 'Peminjaman') {
                 buttons += `<li>
-                <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" style="width : 90px;" onclick="returnFile(${index})">
+                <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" style="width : 80px; height : 30px;" onclick="returnFile(${index})">
                     <i class="fas fa-check me-1"></i>Return
                 </button>
             </li>`;
@@ -239,14 +168,14 @@ class TableLoans {
 
         if (this._typeDataLoans == "pengembalian" && loan.getStatus() === 'Pengembalian' && (isStaff(this._role) || isAdministrator(this._role))) {
             buttons += `<li>
-                <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" style="width : 90px;" onclick="collectFileBack(${index})">
+                <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" style="width : 80px; height : 30px;" onclick="collectFileBack(${index})">
                     <i class="fas fa-check me-1"></i>Confirm
                 </button>
             </li>`;
         } else 
         if (this._typeDataLoans == "berita-acara") {
             buttons += `<li>
-                <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" style="width : 90px;" onclick="printBA(${index})">
+                <button type="button" class="btn btn-success my-1 mx-0 px-1 py-0" style="width : 80px; height : 30px;" onclick="printBA(${index})">
                     <i class="fas fa-print me-1"></i>Print BA
                 </button>
             </li>`;
@@ -278,7 +207,7 @@ class TableLoans {
         const history = JSON.parse(this._listLoan.getLoanByIdx(index).getHistory());
 
         let ret = `
-            <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+            <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
                 <h3 class="alert-heading">History</h3>
                 <hr class="text-dark">
 

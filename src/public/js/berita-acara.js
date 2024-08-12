@@ -68,7 +68,7 @@ async function printBA(idx) {
         const officers = await responseOfficers.json();
 
         const overlayContent = `
-            <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+            <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
                 <h3 class="alert-heading">Cetak Berita Acara</h3>
                 <hr class="text-dark">
                 
@@ -79,6 +79,12 @@ async function printBA(idx) {
                                 ${officers.map((officer, i) => `<option value="${i}">${officer.name}</option>`).join('')}
                             </select>
                         </div>
+
+                        <div class="form-item mb-3 date-container" id="form-overlay">
+                            <label for="date" class="form-label">Tanggal : </label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                        </div>
+
                         <button type="submit" class="btn btn-success">Cetak</button>
                     </form>
                     <button type="button position-fixed z-5" class="btn-close " data-bs-dismiss="alert" aria-label="Close" onclick="removeBlurAction()"></button>
@@ -115,7 +121,7 @@ async function printBA(idx) {
             //     kondisi : <kondisi>,
             // }
 
-            const date = new Date();
+            const date = new Date(document.getElementById('date').value);
             const tanggal = date.getUTCDate();
             const year = date.getUTCFullYear();
             const hari = date.toLocaleDateString('id-ID', { weekday: 'long' });
@@ -126,7 +132,9 @@ async function printBA(idx) {
             console.log(tableLoans.getLoanByIdx(idx).getNameUser());
 
             const nama_pengurus = officer.name;
+            const nama_pengurus_caps = nama_pengurus.toUpperCase();
             const nama_peminjam = tableLoans.getLoanByIdx(idx).getNameUser();
+            const nama_peminjam_caps = nama_peminjam.toUpperCase();
             const nip_pengurus = officer.nip;
             const jabatan_pengurus = officer.position;
             const kecamatan = tableLoans.getLoanByIdx(idx).getKecamatan();
@@ -136,7 +144,6 @@ async function printBA(idx) {
             const berkas = tableLoans.getLoanByIdx(idx).getFile().toLowerCase();
             const berkas_caps = berkas.toUpperCase();
             const kondisi = tableLoans.getLoanByIdx(idx).getStatus().toLowerCase();
-
             if (kondisi === "selesai") kondisi = "baik";
             
             const data = {
@@ -146,7 +153,9 @@ async function printBA(idx) {
                 bulan,
                 tahun: year,
                 nama_pengurus,
+                nama_pengurus_caps,
                 nama_peminjam,
+                nama_peminjam_caps,
                 nip_pengurus,
                 jabatan_pengurus,
                 kecamatan,
@@ -156,6 +165,7 @@ async function printBA(idx) {
                 berkas,
                 berkas_caps,
                 kondisi,
+
             };
 
             const pengguna = await refreshToken();

@@ -52,7 +52,7 @@ function sortTable() {
 async function TambahOfficer(idx) {
 
     const overlayContent = `
-        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
         <h3 class="alert-heading">Tambah Data Penandatangan</h3>
         <hr class="text-dark">
 
@@ -134,7 +134,7 @@ async function editOfficer(idx) {
     const officer = tableOfficers.getListOfficer().getOfficerByIdx(idx);
 
     const overlayContent = `
-        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
         <h3 class="alert-heading">Edit Data Penandatangan</h3>
         <hr class="text-dark">
 

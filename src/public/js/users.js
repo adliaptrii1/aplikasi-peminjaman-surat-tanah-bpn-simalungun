@@ -53,7 +53,7 @@ function sortTable() {
 async function TambahUser(idx) {
 
     const overlayContent = `
-        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
         <h3 class="alert-heading">Tambah Data Pengguna</h3>
         <hr class="text-dark">
 
@@ -77,6 +77,16 @@ async function TambahUser(idx) {
             <div class="form-item mb-3 date-container" id="form-overlay">
                 <label for="phone_number" class="form-label">Nomor Telepon</label>
                 <input type="text" class="form-control" id="phone_number" name="phone_number">  
+            </div>
+
+            <div class="form-item mb-3 date-container" id="form-overlay">
+                <label for="nik" class="form-label">NIK</label>
+                <input type="text" class="form-control" id="nik" name="nik" value="" >  
+            </div>
+
+            <div class="form-item mb-3 date-container" id="form-overlay">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address" name="address" value="" >  
             </div>
 
             <div class="form-item mb-3 date-container" id="form-overlay">
@@ -116,6 +126,8 @@ async function TambahUser(idx) {
         const username = form.querySelector('#username').value;
         const email = form.querySelector('#email').value;
         const phone_number = form.querySelector('#phone_number').value;
+        const nik = form.querySelector('#nik').value;
+        const address = form.querySelector('#address').value;
         const isAdmin = form.querySelector('#role').value;
         const password = form.querySelector('#password').value;
         const confirmPassword = form.querySelector('#password_confirmation').value;
@@ -131,7 +143,7 @@ async function TambahUser(idx) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${pengguna.getAccessToken()}`,
                 },
-                body: JSON.stringify({ name, username, email, phone_number, isAdmin, password, confirmPassword }),
+                body: JSON.stringify({ name, username, email, phone_number, nik, address, isAdmin, password, confirmPassword }),
             });
             if (!response.ok) {
                 const err = await response.json();
@@ -142,7 +154,7 @@ async function TambahUser(idx) {
 
             window.location.reload();
         } catch (error) {
-            await createAlertMessage(error.message, true);
+            createAlertMessage(error.message, true);
             console.log("Reload");
             window.location.reload();
         }
@@ -170,7 +182,7 @@ async function editPengguna(idx) {
     }
 
     const overlayContent = `
-        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
         <h3 class="alert-heading">Edit Data Pengguna</h3>
         <hr class="text-dark">
 
@@ -194,6 +206,16 @@ async function editPengguna(idx) {
             <div class="form-item mb-3 date-container" id="form-overlay">
                 <label for="phone_number" class="form-label">Nomor Telepon</label>
                 <input type="text" class="form-control" id="phone_number" name="phone_number" value="${pengguna.getPhoneNumber()}" >  
+            </div>
+
+            <div class="form-item mb-3 date-container" id="form-overlay">
+                <label for="nik" class="form-label">NIK</label>
+                <input type="text" class="form-control" id="nik" name="nik" value="${pengguna.getNIK()}" >  
+            </div>
+
+            <div class="form-item mb-3 date-container" id="form-overlay">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address" name="address" value="${pengguna.getAddress()}" >  
             </div>
 
             <div class="form-item mb-3 date-container" id="form-overlay" >
@@ -227,6 +249,8 @@ async function editPengguna(idx) {
         const email = form.querySelector('#email').value;
         const phone_number = form.querySelector('#phone_number').value;
         const isAdmin = form.querySelector('#role').value;
+        const nik = form.querySelector('#nik').value;
+        const address = form.querySelector('#address').value;
 
         const penggunaRefreshToken = await refreshToken();
         console.log(pengguna.getAccessToken());
@@ -239,7 +263,7 @@ async function editPengguna(idx) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${penggunaRefreshToken.getAccessToken()}`,
                 },
-                body: JSON.stringify({ name, username, email, phone_number, isAdmin }),
+                body: JSON.stringify({ name, username, email, phone_number, isAdmin, nik, address }),
             });
 
             if (!response.ok) {

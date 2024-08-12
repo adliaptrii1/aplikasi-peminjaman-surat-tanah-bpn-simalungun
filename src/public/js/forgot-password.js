@@ -1,20 +1,18 @@
 import createAlertMessage from "./utils/alert-message.js";
 // const axios = require('axios');
 const url = 'http://localhost:3000/';
-document.getElementById('form-login').addEventListener('submit',  async function(event)  {
+document.getElementById('form-forgot-password').addEventListener('submit',  async function(event)  {
     event.preventDefault();
     
-    console.log('Login');
-    const username = await document.getElementById('username').value;
-    const password = await document.getElementById('password').value;
+    const email = await document.getElementById('email').value;
 
     try {
-        const response = await fetch(url + 'api/login', {
+        const response = await fetch(url + 'api/reset-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({ email}),
         });
         
         const data = await response.json();
@@ -22,9 +20,9 @@ document.getElementById('form-login').addEventListener('submit',  async function
             throw new Error(data.message);
         }
 
-        console.log(data);
+        createAlertMessage("Silahkan cek email untuk mengganti kata sandi akun Anda!");
 
-        window.location.href = '/'; // Redirect ke halaman utama
+        window.location.href = '/login';
     } catch (error) {
         console.log(error.message);
         alert(error.message);

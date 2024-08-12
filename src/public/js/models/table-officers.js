@@ -141,12 +141,12 @@ class TableOfficers {
         let buttons = `
             <ul class="list-unstyled">
                 <li>
-                    <button type="button" class="btn btn-secondary my-1 mx-0 px-1 py-0 fs-6" style="width : 90px;" onclick="editOfficer(${index})">
+                    <button type="button" class="btn btn-secondary my-1 mx-0 px-1 py-0 " style="width : 80px; height : 30px;" onclick="editOfficer(${index})">
                         <i class="fas fa-edit me-1 text-light"></i> Edit
                     </button>
                 </li>
                 <li>
-                    <button type="button" class="btn btn-danger my-1 mx-0 px-1 py-0 fs-6" style="width : 90px;" onclick="deleteOfficer(${index})">
+                    <button type="button" class="btn btn-danger my-1 mx-0 px-1 py-0 " style="width : 80px; height : 30px;" onclick="deleteOfficer(${index})">
                         <i class="fas fa-trash me-1 text-light"></i> Delete
                     </button>
                 </li>
@@ -335,8 +335,7 @@ class TableOfficers {
     setUpTable() {
         // console.log("Setup Table");
         // Cek apakah ada parameter query pada url
-        const url = new URL(window.location.href);
-        const search = url.searchParams.get('search');
+        
 
         if (search) {
             this.searchKey(search);

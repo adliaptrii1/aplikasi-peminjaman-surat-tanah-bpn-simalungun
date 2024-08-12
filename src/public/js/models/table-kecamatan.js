@@ -108,12 +108,12 @@ class TableKecamatan {
         let buttons = `
             <ul class="list-unstyled">
                 <li>
-                    <button type="button" class="btn btn-secondary my-1 mx-0 px-1 py-0 fs-6" style="width : 90px;" onclick="editKecamatan(${index})">
+                    <button type="button" class="btn btn-secondary my-1 mx-0 px-1 py-0 " style="width : 80px; height : 30px;" onclick="editKecamatan(${index})">
                         <i class="fas fa-edit me-1 text-light"></i> Edit
                     </button>
                 </li>
                 <li>
-                    <button type="button" class="btn btn-danger my-1 mx-0 px-1 py-0 fs-6" style="width : 90px;" onclick="deleteKecamatan(${index})">
+                    <button type="button" class="btn btn-danger my-1 mx-0 px-1 py-0 " style="width : 80px; height : 30px;" onclick="deleteKecamatan(${index})">
                         <i class="fas fa-trash me-1 text-light"></i> Delete
                     </button>
                 </li>

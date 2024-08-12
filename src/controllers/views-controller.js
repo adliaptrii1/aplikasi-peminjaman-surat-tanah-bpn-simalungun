@@ -41,6 +41,17 @@ const renderViewLogin = async (req, res) => {
     });
 }
 
+const renderViewRegister = async (req, res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('register', {
+        layout : 'layouts/main-layout',
+        title : 'Register',
+        message,
+        isDanger,
+    });
+}
+
 const renderViewTambahPengajuan = async (req, res) => {
     const { message, isDanger } = getAlertMessage(req);
 
@@ -163,10 +174,34 @@ const renderViewTipePelayanan = async (req,res) => {
     });
 }
 
+const renderViewForgotPassword = async (req,res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('forgot-password', {
+        layout : 'layouts/main-layout',
+        title : 'Forgot Password',
+        message,
+        isDanger,
+    });
+}
+
+const renderViewResetPassword = async (req,res) => {
+    const { message, isDanger } = getAlertMessage(req);
+
+    res.render('reset-password', {
+        layout : 'layouts/main-layout',
+        title : 'Reset Password',
+        message,
+        isDanger,
+    });
+}
+
+
 
 module.exports = {
     renderViewIndex, 
     renderViewLogin, 
+    renderViewRegister,
     renderViewTambahPengajuan, 
     renderViewPeminjaman,
     renderViewPengajuan,
@@ -177,5 +212,7 @@ module.exports = {
     renderViewKecamatan,
     renderViewKelurahan,
     renderViewTipeHak,
-    renderViewTipePelayanan
+    renderViewTipePelayanan,
+    renderViewForgotPassword,
+    renderViewResetPassword,
 }

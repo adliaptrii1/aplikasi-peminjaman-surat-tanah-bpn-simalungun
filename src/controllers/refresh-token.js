@@ -22,7 +22,8 @@ const refreshToken = async (req, res) => {
             const email = user.email;
             const phoneNumber = user.phone_number;
             const isAdmin = user.isAdmin;
-            const accessToken = jwt.sign({ userId, username, name, email, phoneNumber, isAdmin }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '20s' });
+            const nik = user.nik;
+            const accessToken = jwt.sign({ userId, username, name, email, phoneNumber, isAdmin, nik }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '20s' });
             res.json({ accessToken: accessToken });
         });
 

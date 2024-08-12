@@ -48,7 +48,7 @@ function sortTable() {
 async function TambahRightsType(idx) {
 
     const overlayContent = `
-        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
         <h3 class="alert-heading">Tambah Data Tipe Hak</h3>
         <hr class="text-dark">
 
@@ -110,7 +110,7 @@ async function editRightsType(idx) {
     const rightsType = tableRightsType.getListRightsType().getRightsTypeByIdx(idx);
 
     const overlayContent = `
-        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert">
+        <div class="alert alert-light alert-dismissible fade show bg-light text-white border-0" role="alert" id="modal">
         <h3 class="alert-heading">Edit Data Tipe Hak</h3>
         <hr class="text-dark">
 
